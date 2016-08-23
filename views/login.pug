@@ -1,0 +1,39 @@
+doctype
+html(lang="en")
+  head
+    title #{ title } - Cerberus RPC
+    link(rel="stylesheet", href="/css/style.css")
+    link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css")
+    //- link(rel="stylesheet", href="/css/bootstrap-3.3.6.min.css")
+  body.login
+    <!-- BEGIN LOGO -->
+    div.logo
+      h1
+        strong ATCerberus
+    <!-- END LOGO -->
+
+    <!-- BEGIN LOGIN -->
+    div.content
+      <!-- BEGIN LOGIN FORM -->
+      form.login-form(action="/auth" method="post")
+        h3.form-title Entra en tu cuenta
+        div
+          button.close(data-close="alert")
+          //- span Introduce Usuario y Contraseña
+          div.form-group
+            <!--ie8, ie9 does not support html5 placeholder, so we just show field title for that-->
+            label.control-label Usuario
+            div.input-icon
+              i.glyphicon.glyphicon-user
+              input(type="text" autocomplete="off" placeholder="Usuario..." name="usu_form")
+          div
+            label.control-label Contraseña
+          div.input-icon
+            i.glyphicon.glyphicon-lock
+            input(type="password" autocomplete="off" placeholder="Contraseña..." name="pass_form")
+          div.form-actions
+            button(type="submit" class="btn green pull-right") Login
+    <!-- END LOGIN -->
+    <!-- BEGIN COPYRIGHT -->
+    div.copyright 2016 &copy; ATCerberus RPC.
+    <!-- END COPYRIGHT -->

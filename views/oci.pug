@@ -1,0 +1,78 @@
+extends layout
+
+block mainContent
+    div.mainContent
+      h2 Oficina de Control Interno
+      div.btn-group(id="toolbar")
+        button.btn.btn-default(type="button", id="btnAdd")
+          i.glyphicon.glyphicon-plus
+        button.btn.btn-default(type="button", id="btn")
+          i.glyphicon.glyphicon-heart
+        button.btn.btn-default(type="button", id="btnDelete")
+          i.glyphicon.glyphicon-trash
+      table(
+        id="ociTable",
+        data-toggle="table"
+        data-url="/getDocsOci/"
+        data-height="350"
+        data-width="600"
+        data-click-to-select="true"
+        data-single-select="true"
+        data-search="true"
+        data-show-refresh="true"
+        data-show-toggle="true"
+        data-show-columns="true"
+        data-show-export="true"
+        data-show-pagination-switch="true"
+        data-pagination="true"
+        data-show-footer="true"
+        data-toolbar="#toolbar"
+        data-search-align='left'
+        data-buttons-align='right'
+        data-toolbar-align='right'
+        )
+        thead
+          tr
+            //- th(data-field="_id") id
+            //- th(data-field="nombreDocumento") Nombre
+            //- th(data-field="nombreFichero") Fichero
+
+      //- table(id="ociTable",
+      //-         data-toggle="table"
+      //-         data-url="/getDocsOci/"
+      //-         data-height="350"
+      //-         data-width="600"
+      //-         data-click-to-select="true"
+      //-         data-single-select="true"
+      //-         data-search="true"
+      //-         data-show-refresh="true"
+      //-         data-show-toggle="true"
+      //-         data-show-columns="true"
+      //-         data-show-export="true"
+      //-         data-show-pagination-switch="true"
+      //-         data-pagination="true"
+      //-         data-show-footer="true"
+      //-         data-toolbar="#toolbar"
+      //-         )
+      //-     tbody
+      //-       tr
+      //-         //- <!--<th data-field="state" data-checkbox="true"></th>-->
+      //-         th(data-field="_id" data-align="right") Id
+      //-         //- th(data-field="NumeroDocumento" data-align="right") Doc.
+      //-         //- th(data-field="Fecha" data-align="") Fecha
+      //-         th(data-field="nombreDocumento" data-align="" font-size="6") Documento
+      //-         th(data-field="nombreFichero" data-align="" font-size="6") Fichero
+      //-         //- th(data-field="RutaDocumento" data-align="" font-size="6") Ruta
+      //-         th(data-field="operate" data-formatter="operateFormatter" data-events="operateEvents") Operacion
+
+      script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js")
+      <!--Bootstrap-Table-- https://github.com/wenzhixin/bootstrap-table -->
+      script(src="/js/bootstrap-table/bootstrap-table.js")
+      script(src="js/bootstrap-table/locale/bootstrap-table-es-SP.js")
+      script(src="js/bootstrap-table/extensions/export/bootstrap-table-export.js")
+      script(src="js/bootstrap-table/extensions/editable/bootstrap-table-editable.js")
+      <!-- table export -->
+      script(src="js/jquery-plugin/tableExport.js")
+      script(src="js/jquery-plugin/jquery.base64.js")
+      script(src="/js/public.js")
+

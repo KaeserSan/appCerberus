@@ -1,0 +1,73 @@
+doctype
+html(lang="en")
+	head
+		title #{ title } - Cerberus RPC
+		link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css")
+		<!--Foundation-->
+		link(rel="stylesheet" href="/css/foundation/foundation.css" type="text/css")
+		//- link(rel="stylesheet" href="/css/foundation/foundation.min.css" type="text/css")
+
+		<!--Bootstrap-Table-- https://github.com/wenzhixin/bootstrap-table -->
+		link(rel="stylesheet" href="/css/bootstrap-table/bootstrap-table.css" type="text/css")
+
+		link(rel="stylesheet", href="/css/style.css")
+
+
+	body.cerberusBody
+		header.cerberusHeader
+			div.logo
+				img(src="/img/Cerberus_Logo.png")
+			div.upperMenu
+				//- a(href="/tasks", name="menuTasks", class=activeTasks ? "selected" : "").menuButton List Tasks
+				div
+					span Seleccione cliente: 
+				div.selectClientes
+					select#cliente
+						option(value="prueba") Prueba
+				div
+					span Ejercicio: 
+				div.ejercicio
+					select#ejercicio
+						option(value="2016") 2016
+				//- a(href="/completed", name="menuComplete", class=activeTasks ? "" : "selected").menuButton Completed
+		div.cerberusContainer
+			aside.asideMenu.col-md-2
+				span Menu
+				div.menuLateral
+					a(href="/planAccion") Plan Acción
+					a(href="/oci") OCI
+					a(href="/mapaRiesgos") Mapa de Riesgos
+					a(href="/auditorias") Auditorias y Controles
+					a(href="/protocolos") Protocolos Vigentes
+					a(href="/canalEtico") Canal Ético
+					a(href="/registros") Registros
+					a(href="/formacion") Formación
+					a(href="/gestion") Gestión Expedientes
+					a(href="/agenda") Agenda RPC
+					a(href="/plantillas") Plantillas
+					a(href="/atenuantes") Atenuantes Gestión
+			div.mainContent.col-md-8
+				block mainContent
+			div.semaforo.col-md-2
+				img(src="/img/semaforo.png")
+
+
+	script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js")
+
+
+	<!--Foundation-->
+	//- script(src="/js/foundation/foundation.min.js")
+	script(src="/js/foundation/foundation.js")
+	script(src="/js/foundation/foundation.topbar.js")
+	//- <!--Bootstrap-Table-- https://github.com/wenzhixin/bootstrap-table -->
+	//- script(src="js/bootstrap-table/bootstrap-table.js")
+	//- script(src="js/bootstrap-table/locale/bootstrap-table-es-SP.js")
+	//- script(src="js/bootstrap-table/extensions/export/bootstrap-table-export.js")
+	//- script(src="js/bootstrap-table/extensions/editable/bootstrap-table-editable.js")
+	//- <!-- table export -->
+	//- script(src="js/jquery-plugin/tableExport.js")
+	//- script(src="js/jquery-plugin/jquery.base64.js")
+
+	script.
+		$(document).foundation();
+
