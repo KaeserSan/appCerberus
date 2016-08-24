@@ -25,9 +25,12 @@ html(lang="en")
 					select#comboClientes
 						//- option(value="prueba") Prueba
 						- console.log("prueba desde plantilla");
-						each cliente, i in clientes
+						- var parsedClientes = JSON.parse( clientes ); 
+						each cliente in parsedClientes
 							- console.log( cliente.nombreCliente );
-							option(value=cliente.codigoCliente) cliente.nombreCliente
+							- var nomCliente = cliente.nombreCliente;
+							- console.log( nomCliente );
+							option(value=cliente.codigoCliente) #{nomCliente}
 				div
 					span Ejercicio: 
 				div.ejercicio

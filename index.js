@@ -47,7 +47,7 @@ app.post('/auth', function(req, res, next){
     if (data){
       console.log( data );
       res.cookie('user', data[0].usuario );
-      res.render( "mainMenu", { clientes: data[0].clientes } );
+      res.render( "mainMenu", { clientes:  JSON.stringify(data[0].clientes) } );
     }
     else {
       res.send( "No tienes acceso.");
