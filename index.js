@@ -34,7 +34,8 @@ app.post('/auth', function(req, res, next){
   // main.checkUser( req.params.id , function( data ){   //usar parametros => /auth/:id
   main.checkUser( req.body , function( data ){ //usar post parseado por body-parser
     if (data){
-      res.render( "mainMenu", { clientes: {} } );
+      console.log( data );
+      res.render( "mainMenu", { clientes: data.clientes } );
     }
     else {
       res.send( "No tienes acceso.");
@@ -43,7 +44,7 @@ app.post('/auth', function(req, res, next){
 });
 
 app.get('/oci', function(req, res, next){
-  res.render( "oci", { cliente: {}, ejercicio: {} } );
+  res.render( "oci", { clientes: {}, ejercicios: {} } );
 });
 
 app.get('/getDocsOci', function( req, res, next){
@@ -52,11 +53,14 @@ app.get('/getDocsOci', function( req, res, next){
   } );
 });
 
-app.post('/sendFile', function( req, res, next){
-  let fileName = req.body.filename;
-  let filePath = req.body.filepath;
-  let fullFilePath = path.join(__dirname, "Data/", filePath);
-  let mimetype = mime.lookup(fullFilePath);
+app.get('/sendFile', function( req, res, next){
+
+  // let fileName = req.body.filename;
+  // let filePath = req.body.filepath;
+  // let fullFilePath = path.join(__dirname, "Data/", filePath );
+  // let mimetype = mime.lookup(fullFilePath);
+
+  let fullFilePath = '/Users/angel/Documents/proyectos/appCerberus/Data/ATCerberus.pdf'
 
   // res.setHeader('Content-disposition', 'attachment; filename=' + fileName);
   // res.setHeader('Content-type', mimetype);
@@ -78,9 +82,9 @@ app.post('/sendFile', function( req, res, next){
           'x-sent': true
       }
     };
-  console.log("Sending " + fullFilePath);
+  console.log("--> Sending " + fullFilePath);
   // res.download( fullFilePath, fileName );
-  res.sendFile(fullFilePath, options, function (err) {
+  res.sendFile(fullFilePath, /*options, */function (err) {
     if (err) {
       console.log(err);
       res.status(err.status).end();

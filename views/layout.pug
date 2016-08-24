@@ -22,12 +22,16 @@ html(lang="en")
 				div
 					span Seleccione cliente: 
 				div.selectClientes
-					select#cliente
-						option(value="prueba") Prueba
+					select#comboClientes
+						//- option(value="prueba") Prueba
+						- console.log("prueba desde plantilla");
+						- console.log( {{clientes}} );
+						each cliente, i in clientes
+							option(value=cliente) cliente
 				div
 					span Ejercicio: 
 				div.ejercicio
-					select#ejercicio
+					select#comboEjercicio
 						option(value="2016") 2016
 				//- a(href="/completed", name="menuComplete", class=activeTasks ? "" : "selected").menuButton Completed
 		div.cerberusContainer

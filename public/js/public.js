@@ -14,7 +14,7 @@ window.operateEvents = {
 
 console.log("public.js....");
 $('#btnAdd').on('click', function(){
-  alert( this );
+  alert( this.name );
 })
 
 
@@ -82,18 +82,20 @@ $('#ociTable').on('all.bs.table', function (e, name, args) {
     })
     .on('click-row.bs.table', function (e, row, $element) {
         // $result.text('Event: click-row.bs.table');
-        // alert( row.nombreDocumento );
-        $.ajax({
-            url: '/sendFile',
-            type: 'post',
-            data: {
-              filename: row.nombreDocumento,
-              filepath: row.nombreFichero
-            },
-            // success: function (data) {
-            //   data
-            // }
-          });
+        // alert( row.nombreDocumento )
+        console.log("redirecting...")
+        window.location('/sendFile') 
+        // $.ajax({
+        //     url: '/sendFile',
+        //     type: 'get',
+        //     data: {
+        //       filename: row.nombreDocumento,
+        //       filepath: row.nombreFichero
+        //     },
+        //     // success: function (data) {
+        //     //   data
+        //     // }
+        //   });
     });
 
 

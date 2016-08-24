@@ -11,7 +11,7 @@ var url = require('url');
 
 
 
-var url="mongodb://localhost:27017/CerberusRPC";
+var url="mongodb://localhost:27017/CerberusRPCtest";
 // var $ = require('jquery');
 
 var _tasks = {};
@@ -22,17 +22,17 @@ exports.checkUser = function ( param1, callback ){
   console.log( param1 );
   let filter = {
     usuario: param1.usu_form,
-    pass: param1.pass_form
+    password: param1.pass_form
    };
   let project = {};
-  let collection = 'user';
+  let collection = 'users';
   let userOk = getMongoData(filter, project, collection, function( data ){
     console.log(data.length);
     if ( data.length === 0 ) {
       callback( false );
     }
     else {
-      callback ( true ) ;
+      callback ( data ) ;
     }
   });
 };
@@ -42,7 +42,7 @@ exports.getDocsOci = function ( cliente, ejercicio, callback ){
   console.log( cliente );
   let filter = {};
   let project = {};
-  let collection = 'oci';
+  let collection = 'clientes';
   let userOk = getMongoData(filter, project, collection, function( data ){
     // console.log( data );
     if ( data.length === 0 ) {
