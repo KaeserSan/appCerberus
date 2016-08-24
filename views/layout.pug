@@ -25,9 +25,9 @@ html(lang="en")
 					select#comboClientes
 						//- option(value="prueba") Prueba
 						- console.log("prueba desde plantilla");
-						- console.log( {{clientes}} );
 						each cliente, i in clientes
-							option(value=cliente) cliente
+							- console.log( cliente.nombreCliente );
+							option(value=cliente.codigoCliente) cliente.nombreCliente
 				div
 					span Ejercicio: 
 				div.ejercicio

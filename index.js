@@ -30,12 +30,24 @@ app.get('/', function(req, res, next) {
   res.render('login');
 });
 
+app.get('/usuarios',function( req, res, next ){
+  main.checkUserTest({usuario: 'angel'}, function( data ){
+    if ( data ){
+      res.json( data );
+    } else {
+      res.json({});
+    }
+  });
+});
+
+
 app.post('/auth', function(req, res, next){
   // main.checkUser( req.params.id , function( data ){   //usar parametros => /auth/:id
   main.checkUser( req.body , function( data ){ //usar post parseado por body-parser
     if (data){
       console.log( data );
-      res.render( "mainMenu", { clientes: data.clientes } );
+      res.cookie('user', data[0].usuario );
+      res.render( "mainMenu", { clientes: data[0].clientes } );
     }
     else {
       res.send( "No tienes acceso.");
