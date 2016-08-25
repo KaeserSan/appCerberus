@@ -42,18 +42,40 @@ exports.checkUser = function ( param1, callback ){
   masterSchema.masterusuarios.find(filter, project)
   .populate('clientes')
   .exec( function(err, data){
+    if ( err ){ callback( false )}
     callback( data );
   });
 };
 exports.checkUserTest = function ( param1, callback ){
   let filter = param1;
   let project = {};
-
   masterSchema.masterusuarios.find(filter, project)
   .populate('clientes')
   .exec( function(err, data){
     callback( data );
   });
+};
+exports.getExercices = function ( callback ){
+  let filter = {};
+  let project = { ejercicio: { id: 1} };
+  masterSchema.masterclientes.find().distinct("ejercicio.id")
+  .exec( function(err, data){
+    let dataInt = data.map( function( dat ){
+                    return parseInt( dat, 10 );
+                  });
+    let currentYear = new Date().getFullYear();
+    if (dataInt.indexOf( currentYear ) === -1){
+      dataInt.push( currentYear );
+    }
+    callback( dataInt );
+  });
+
+
+  // masterSchema.masterclientes.find().distinct("ejercicio.id", function(error, results) {
+  //   console.log (results);
+
+  // });
+
 };
 
 

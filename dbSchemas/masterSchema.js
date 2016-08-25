@@ -5,151 +5,199 @@ var Schema = mongoose.Schema;
 var masterClientesSchema = new Schema (     //BD_Clientes
   {
     datos: {
-      codigoCliente: Number,
-      nombreCliente: { type: String, required: true, unique: true },
-      cifCliente: { type: String, required: true, unique: true },
-      logoCliente: String
+      codigo: Number,
+      nombre: { type: String, required: true, unique: true },
+      cif: { type: String, required: true, unique: true },
+      logo: String
     },
     departamentos: [{
-      nombreDepartamento: String,
+      nombre: String,
       responsable: String,
-      cargo: String
+      cargo: String,
+      activo: Boolean
     }],
-    planAccion: {
-      globales: [{
-        tipoAccion: String,
-        accion: String,
-        responsable: String,
-        supervisor: String,
-        deadline: Date
-      }],
-      especificas: [{
-        tipoAccion: String,
-        accion: String,
-        responsable: String,
-        supervisor: String,
-        departamento: String,
-        deadline: Date
-      }]
-    },
-    documentos: {
-      oci: {
-        estatutos: [{
-              nombreDocumento: String,
-              nombreFichero: String,
-              version: String,
-              fechaUpload: Date,
-              responsable: String
+    ejercicio: {
+      id: Number,
+      planAccion: {
+        globales: [{
+          tipoAccion: String,
+          accion: String,
+          responsable: String,
+          supervisor: String,
+          deadline: Date
         }],
-        personal: [{
-              nombre: String,
-              cargo: String,
-              fechaAlta: Date,
-              fechaBaja: Date,
-              tipoPersonal: String
-        }],
-        actasReuniones: [{
-              nombreDocumento: String,
-              nombreFichero: String,
-              version: String,
-              fechaUpload: Date,
-              responsable: String
-        }],
-        memoria: [{
-              nombreDocumento: String,
-              nombreFichero: String,
-              version: String,
-              fechaUpload: Date,
-              responsable: String
-        }],
-        scope: [{
-              nombreEmpresa: String,
-              grupo: String,
-              fecha: Date,
-              empresas: [{
+        especificas: [{
+          tipoAccion: String,
+          accion: String,
+          responsable: String,
+          supervisor: String,
+          departamento: String,
+          deadline: Date
+        }]
+      },
+      documentos: {
+        oci: {
+          estatutos: [{
+                nombreDocumento: String,
+                nombreFichero: String,
+                version: String,
+                fechaUpload: Date,
+                responsable: String
+          }],
+          personal: [{
+                nombre: String,
+                cargo: String,
+                fechaAlta: Date,
+                fechaBaja: Date,
+                tipoPersonal: String
+          }],
+          actasReuniones: [{
+                nombreDocumento: String,
+                nombreFichero: String,
+                version: String,
+                fechaUpload: Date,
+                responsable: String
+          }],
+          memoria: [{
+                nombreDocumento: String,
+                nombreFichero: String,
+                version: String,
+                fechaUpload: Date,
+                responsable: String
+          }],
+          scope: [{
                 nombreEmpresa: String,
-                scope: Boolean
-              }]
+                grupo: String,
+                fecha: Date,
+                empresas: [{
+                  nombreEmpresa: String,
+                  scope: Boolean
+                }]
+          }]
+        }
+      },
+      mapaRiesgos: [{
+        tipoPenal: String,
+        fechaauditoria: Date,
+        probabilidad: String,
+        impacto: String,
+        situacion: String,
+        departamento: String,
+        notas : String,
+      }],
+      auditorias: {
+        generales: [{
+            Auditoria: String,
+            Notas: String,
+            Realizada: Boolean,
+            Fecha: Date,
+            FechaProxima: Date,
+        }],
+        programadas: [{
+            Auditoria: String,
+            Notas: String,
+            Realizada: Boolean,
+            Fecha: Date,
+            FechaProxima: Date,
+        }],
+        noProgramadas: [{
+            Auditoria: String,
+            Notas: String,
+            Realizada: Boolean,
+            Fecha: Date,
+            FechaProxima: Date,
+        }],
+        controles: [{
+            Auditoria: String,
+            Notas: String,
+            Realizada: Boolean,
+            Fecha: Date,
+            FechaProxima: Date,
+        }]
+      },
+      protocolos:{
+        economicos: [{
+          nombreDocumento: String,
+          nombreFichero: String,
+          version: String,
+          fechaUpload: Date,
+          responsable: String
+        }],
+        generales: [{
+          nombreDocumento: String,
+          nombreFichero: String,
+          version: String,
+          fechaUpload: Date,
+          responsable: String
+        }]
+      },
+      registros:{
+        documentos:[{
+          nombreDocumento: String,
+          nombreFichero: String,
+          version: String,
+          fechaUpload: Date,
+          responsable: String
+        }],
+        denuncias:[{
+          nombreDocumento: String,
+          nombreFichero: String,
+          version: String,
+          fechaUpload: Date,
+          responsable: String
+        }],
+        propuestasSancion:[{
+          nombreDocumento: String,
+          nombreFichero: String,
+          version: String,
+          fechaUpload: Date,
+          responsable: String
+        }]
+      },
+      atenuantesGestion: {
+        denunciaDirecta: [{
+          nombreDocumento: String,
+          nombreFichero: String,
+          version: String,
+          fechaUpload: Date,
+          responsable: String,
+          concepto: String
+        }],
+        investigacion:[{
+          nombreDocumento: String,
+          nombreFichero: String,
+          version: String,
+          fechaUpload: Date,
+          responsable: String,
+          concepto: String,
+          profesionales: [{
+            tipoProfesional: String,
+            profesional: String
+          }],
+          pruebas: [{
+            nombreDocumento: String,
+            nombreFichero: String,
+            version: String,
+            fechaUpload: Date,
+          }]
+        }],
+        reparacion: [{
+          nombreDocumento: String,
+          nombreFichero: String,
+          version: String,
+          fechaUpload: Date,
+          responsable: String,
+          concepto: String
+        }],
+        aplicacionMedidas: [{
+          nombreDocumento: String,
+          nombreFichero: String,
+          version: String,
+          fechaUpload: Date,
+          responsable: String,
+          concepto: String
         }]
       }
-    },
-    mapaRiesgos: [{
-      tipoPenal: String,
-      fechaauditoria: Date,
-      probabilidad: String,
-      impacto: String,
-      situacion: String,
-      departamento: String,
-      notas : String,
-    }],
-    auditorias: {
-      generales: [{
-          Auditoria: String,
-          Notas: String,
-          Realizada: Boolean,
-          Fecha: Date,
-          FechaProxima: Date,
-      }],
-      programadas: [{
-          Auditoria: String,
-          Notas: String,
-          Realizada: Boolean,
-          Fecha: Date,
-          FechaProxima: Date,
-      }],
-      noProgramadas: [{
-          Auditoria: String,
-          Notas: String,
-          Realizada: Boolean,
-          Fecha: Date,
-          FechaProxima: Date,
-      }],
-      controles: [{
-          Auditoria: String,
-          Notas: String,
-          Realizada: Boolean,
-          Fecha: Date,
-          FechaProxima: Date,
-      }]
-    },
-    protocolos:{
-      economicos: [{
-        nombreDocumento: String,
-        nombreFichero: String,
-        version: String,
-        fechaUpload: Date,
-        responsable: String
-      }],
-      generales: [{
-        nombreDocumento: String,
-        nombreFichero: String,
-        version: String,
-        fechaUpload: Date,
-        responsable: String
-      }]
-    },
-    registros:{
-      documentos:[{
-        nombreDocumento: String,
-        nombreFichero: String,
-        version: String,
-        fechaUpload: Date,
-        responsable: String
-      }],
-      denuncias:[{
-        nombreDocumento: String,
-        nombreFichero: String,
-        version: String,
-        fechaUpload: Date,
-        responsable: String
-      }],
-      propuestasSancion:[{
-        nombreDocumento: String,
-        nombreFichero: String,
-        version: String,
-        fechaUpload: Date,
-        responsable: String
-      }]
     },
     plantillas:{
       oci: [{
@@ -157,79 +205,40 @@ var masterClientesSchema = new Schema (     //BD_Clientes
         nombreFichero: String,
         version: String,
         fechaUpload: Date,
-        responsable: String
+        responsable: String,
+        active: Boolean
       }],
       auditorias: [{
         nombreDocumento: String,
         nombreFichero: String,
         version: String,
         fechaUpload: Date,
-        responsable: String
+        responsable: String,
+        active: Boolean
       }],
       controles: [{
         nombreDocumento: String,
         nombreFichero: String,
         version: String,
         fechaUpload: Date,
-        responsable: String
+        responsable: String,
+        active: Boolean
       }],
       protocolos: [{
         nombreDocumento: String,
         nombreFichero: String,
         version: String,
         fechaUpload: Date,
-        responsable: String
+        responsable: String,
+        active: Boolean
       }],
       formacion: [{
         nombreDocumento: String,
         nombreFichero: String,
         version: String,
         fechaUpload: Date,
-        responsable: String
-      }]
-    },
-    atenuantesGestion: {
-      denunciaDirecta: [{
-        nombreDocumento: String,
-        nombreFichero: String,
-        version: String,
-        fechaUpload: Date,
         responsable: String,
-        concepto: String
-      }],
-      investigacion:[{
-        nombreDocumento: String,
-        nombreFichero: String,
-        version: String,
-        fechaUpload: Date,
-        responsable: String,
-        concepto: String,
-        profesionales: [{
-          tipoProfesional: String,
-          profesional: String
-        }],
-        pruebas: [{
-          nombreDocumento: String,
-          nombreFichero: String,
-          version: String,
-          fechaUpload: Date,
-        }]
-      }],
-      reparacion: [{
-        nombreDocumento: String,
-        nombreFichero: String,
-        version: String,
-        fechaUpload: Date,
-        responsable: String,
-        concepto: String
-      }],
-      aplicacionMedidas: [{
-        nombreDocumento: String,
-        nombreFichero: String,
-        version: String,
-        fechaUpload: Date,
-        responsable: String,
-        concepto: String
+        active: Boolean
       }]
     }
   });

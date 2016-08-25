@@ -98,6 +98,10 @@ $('#ociTable').on('all.bs.table', function (e, name, args) {
         //   });
     });
 
+// $(document).ready(function(){
+//   $('#comboClientes').
+
+// };
 
 
 

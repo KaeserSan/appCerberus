@@ -20,22 +20,23 @@ html(lang="en")
 			div.upperMenu
 				//- a(href="/tasks", name="menuTasks", class=activeTasks ? "selected" : "").menuButton List Tasks
 				div
-					span Seleccione cliente: 
+					span Seleccione cliente:
 				div.selectClientes
 					select#comboClientes
 						//- option(value="prueba") Prueba
-						- console.log("prueba desde plantilla");
-						- var parsedClientes = JSON.parse( clientes ); 
+						- var parsedClientes = JSON.parse( clientes );
 						each cliente in parsedClientes
-							- console.log( cliente.nombreCliente );
 							- var nomCliente = cliente.nombreCliente;
-							- console.log( nomCliente );
 							option(value=cliente.codigoCliente) #{nomCliente}
 				div
-					span Ejercicio: 
+					span Ejercicio:
 				div.ejercicio
 					select#comboEjercicio
-						option(value="2016") 2016
+						//- option(value="2016") 2016
+						- var parsedEjercicios = JSON.parse( ejercicios );
+						each ejercicio in parsedEjercicios
+							- var ejercicioValue = ejercicio
+							option(value=ejercicioValue) #{ejercicioValue}
 				//- a(href="/completed", name="menuComplete", class=activeTasks ? "" : "selected").menuButton Completed
 		div.cerberusContainer
 			aside.asideMenu.col-md-2

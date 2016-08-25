@@ -30,24 +30,22 @@ app.get('/', function(req, res, next) {
   res.render('login');
 });
 
-app.get('/usuarios',function( req, res, next ){
-  main.checkUserTest({usuario: 'angel'}, function( data ){
-    if ( data ){
-      res.json( data );
-    } else {
-      res.json({});
-    }
-  });
-});
-
 
 app.post('/auth', function(req, res, next){
   // main.checkUser( req.params.id , function( data ){   //usar parametros => /auth/:id
   main.checkUser( req.body , function( data ){ //usar post parseado por body-parser
-    if (data){
-      console.log( data );
+    console.log( data );
+    console.log( data.length );
+    if (data.length !== 0){
+      console.log( "hay datos de usuario");
       res.cookie('user', data[0].usuario );
-      res.render( "mainMenu", { clientes:  JSON.stringify(data[0].clientes) } );
+      main.getExercices( function( dataEjercicios ){
+        res.render( "mainMenu", {
+                            clientes:  JSON.stringify(data[0].clientes),
+                            ejercicios: JSON.stringify(dataEjercicios)
+                                } );
+
+      });
     }
     else {
       res.send( "No tienes acceso.");
@@ -169,3 +167,27 @@ app.post('/complete/:id', function( req, res, next){
 app.listen(3000, function() {
 	console.log("Listening on port 3000");
 });
+
+
+// Routes para pruebas
+
+app.get('/usuarios',function( req, res, next ){
+  main.checkUserTest({usuario: 'angel'}, function( data ){
+    if ( data ){
+      res.json( data );
+    } else {
+      res.json({});
+    }
+  });
+});
+
+app.get('/getExercices',function( req, res, next ){
+  main.getExercices( function( data ){
+    if ( data ){
+      res.json( data );
+    } else {
+      res.json({});
+    }
+  });
+});
+
