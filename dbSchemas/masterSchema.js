@@ -16,7 +16,7 @@ var masterClientesSchema = new Schema (     //BD_Clientes
       cargo: String,
       activo: Boolean
     }],
-    ejercicio: {
+    ejercicio: [{
       id: Number,
       planAccion: {
         globales: [{
@@ -198,7 +198,7 @@ var masterClientesSchema = new Schema (     //BD_Clientes
           concepto: String
         }]
       }
-    },
+    }],
     plantillas:{
       oci: [{
         nombreDocumento: String,

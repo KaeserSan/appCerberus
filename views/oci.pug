@@ -74,5 +74,10 @@ block mainContent
       <!-- table export -->
       script(src="js/jquery-plugin/tableExport.js")
       script(src="js/jquery-plugin/jquery.base64.js")
-      script(src="/js/public.js")
+      script.
+        if (typeof window.publicLoaded == 'undefined') {
+        //the flag was not found, so the code has not run
+        $.getScript("/js/public.js");
+        }
+      //- script(src="/js/public.js")
 

@@ -13,14 +13,21 @@ window.operateEvents = {
 };
 
 console.log("public.js....");
+var publicLoaded = true;
+
+
 $('#btnAdd').on('click', function(){
   alert( this.name );
-})
+});
+function comboClientesChanged ( param ){
+  alert ( param.value ) ;
+  console.log( param );
+}
 
 
 $('#ociTable').bootstrapTable({
   method: 'get',
-  url: "/getDocsOci/",
+  url: "/getDocsOci/" + $('#comboClientes').val() + '/' + $('#comboEjercicios').val(),
   cache: false,
   height: 500,
   striped: true,
@@ -99,11 +106,7 @@ $('#ociTable').on('all.bs.table', function (e, name, args) {
     });
 
 // $(document).ready(function(){
-//   $('#comboClientes').
-
-// };
-
-
+//  };
 
 
 

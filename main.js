@@ -1,21 +1,22 @@
 /*jshint esversion:6 */
-let mongo = require('mongodb').MongoClient;
-let bodyParser = require('body-parser');
-let ObjectId = require('mongodb').ObjectID;
-let path = require('path');
+let mongo = require('mongodb').MongoClient,
+    bodyParser = require('body-parser'),
+    ObjectId = require('mongodb').ObjectID,
+    path = require('path'),
+    _ = require( 'underscore' ),
+    rp = require('request-promise'),
+    mongoose = require('mongoose'),
+    Promise = require('promise');
+mongoose.Promise = Promise;
 
 // SENDFILE
-let fs = require('fs');
-let exec = require("child_process").exec;
-let mime = require('mime');
-let url = require('url');
+let fs = require('fs'),
+    exec = require("child_process").exec,
+    mime = require('mime'),
+    url = require('url');
 // SENDFILE
 
 // let Promise = require('promise');
-let rp = require('request-promise');
-var mongoose = require('mongoose');
-var Promise = require('promise');
-mongoose.Promise = Promise;
 
 var mongoUrl="mongodb://localhost:27017/CerberusRPCtest";
 mongoose.connect(mongoUrl);
@@ -27,7 +28,16 @@ var masterSchema = require("./dbSchemas/masterSchema.js");
 
 
 
-exports.checkUser = function ( param1, callback ){
+exports.checkUser = checkUser;
+exports.checkUserTest = checkUserTest;
+exports.getExercices = getExercices;
+exports.getCustomer = getCustomer;
+exports.getData = getData;
+exports.getDocsOci = getDocsOci;
+exports.getDocsTest = getDocsTest;
+
+
+function checkUser ( param1, callback ){
   let filter = {
     usuario: param1.usu_form,
     password: param1.pass_form
@@ -39,9 +49,9 @@ exports.checkUser = function ( param1, callback ){
     if ( err ){ callback( false );}
     callback( data );
   });
-};
+}
 
-exports.checkUserTest = function ( param1, callback ){
+function checkUserTest ( param1, callback ){
   let filter = param1;
   let project = {};
   masterSchema.masterusuarios.find(filter, project)
@@ -49,30 +59,10 @@ exports.checkUserTest = function ( param1, callback ){
   .exec( function(err, data){
     callback( data );
   });
-};
+}
 
-// exports.getExercices = function ( callback ){
-//   let filter = {};
-//   let project = { ejercicio: { id: 1} };
-//   masterSchema.masterclientes
-//     .find()
-//     .distinct("ejercicio.id")
-//     .exec( function(err, data){
-//       console.log("getting...");
-//       console.log( data );
-//       let dataInt = data.map( function( dat ){
-//                       return parseInt( dat, 10 );
-//                     });
-//       let currentYear = new Date().getFullYear();
-//       if (dataInt.indexOf( currentYear ) === -1){
-//         dataInt.push( currentYear );
-//       }
-//       callback( dataInt );
-//       // return( dataInt );
-//     });
-// };
-
-exports.getExercices = function ( ){
+function getExercices ( ){
+  console.log("Inside getExercices...");
 
   let filter = {};
   let project = { ejercicio: { id: 1} };
@@ -81,79 +71,111 @@ exports.getExercices = function ( ){
   return masterSchema.masterclientes
     .find()
     .distinct("ejercicio.id");
-    // .then( function(err, data){
-    //   if ( err ){ console.log( err );}
-    //   console.log("getting...");
-    //   console.log( data );
-    //   dataInt = data.map( function( dat ){
-    //     return parseInt( dat, 10 );
-    //   });
-    //   let currentYear = new Date().getFullYear();
-    //   if (dataInt.indexOf( currentYear ) === -1){
-    //     console.log("current year is no more, adding... " + currentYear);
-    //     dataInt.push( currentYear );
-    //     console.log( dataInt );
-    //   }
-    //   // callback( dataInt );
-    //   console.log( "returninggggg" );
-    //   console.log( dataInt );
-    //   // return( dataInt );
-    //   return( dataInt );
-    // });
+}
 
-};
-
-
-
-exports.getCustomer = function( aClients, callback ){
+function getCustomer ( aClients, callback ){
   let result = {};
   let groupPromisesGetClients = [];
   let clientsCollection = masterSchema.masterclientes;
 
+  console.log("..function getCustomers");
+  console.log( aClients );
   aClients.forEach( function( clientId ){
 
-    let query = { 
-    "_id": ObjectId( clientId ) 
-    }
+    let query = {
+    "_id": ObjectId( clientId )
+    };
 
     let projection = {
-      "codigoCliente": 1, 
-      "nombreCliente": 1
-    }
+      "datos.codigo": 1,
+      "datos.nombre": 1
+    };
 
     let promise =  clientsCollection.find(query, projection)
       .exec( function( err, dataMongo ){
         return dataMongo;
       });
-    groupPromisesGetClients.push(promise)
+    groupPromisesGetClients.push(promise);
   });
-
+  console.log("finishing getcustomer function");
   return Promise.all(groupPromisesGetClients);
+}
 
-};
+function getData( cookies , callback ){
+  console.log( "inside function for getting data object" );
+  console.log( cookies );
+  if ( _.isEmpty( cookies )){
+    console.log("Empty cookies, exiting...");
+    callback( false );
+  }
+  var usuario = cookies.usuario;
+  var clientes = cookies.clientes;
+  var data = {};
+  var dataEx = [];
+  var aEjercicios = [];
+  var aClientes = [];
+  var oTemp = {};
 
+  console.log( "cookies" );
+  console.log( usuario );
+  console.log( clientes );
+  var aPromises = [ getExercices(), getCustomer( clientes ) ];
 
+  Promise.all(aPromises)
+    .then( function( aResults ){
+      console.log( "all promises done" );
+      aResults[0].forEach( function( data ){
+        oTemp.year = parseInt(data, 10);
+        aEjercicios.push(oTemp);
+      });
 
+      let currentYear = new Date().getFullYear();
+      if ( _.findWhere(aEjercicios, { year: currentYear }) === undefined){
+        aEjercicios.push( { year: currentYear} );
+      }
 
+      data.ejercicios = aEjercicios;
 
+      aResults[1].forEach( function( data ){
+        aClientes.push( data[0] );
+      });
+      data.clientes = aClientes;
 
+      console.log( "returning data object" );
+      callback ( data );
+    });
 
-exports.getDocsOci = function ( cliente, ejercicio, callback ){
+}
+
+function getDocsOci ( filtro, ejercicio, callback ){
   console.log("getDocsOci: ");
-  console.log( cliente );
-  let filter = {};
+  console.log( filtro );
+  let filter = {
+              "datos.codigo": Number(filtro.cliente),
+              "ejercicio.id": Number(filtro.ejercicio)
+            };
   let project = {};
+  project = { "ejercicio.documentos.oci.estatutos": 1 };
   let collection = 'clientes';
-  let userOk = getMongoData(filter, project, collection, function( data ){
-    // console.log( data );
-    if ( data.length === 0 ) {
-      callback( {} );
-    }
-    else {
-      callback ( data ) ;
-    }
+
+  masterSchema.masterclientes.find( filter, project ) //"favorites.food"
+    .exec( function(err, data){
+    if ( err ){ console.log( err );}
+    console.log( data );
   });
-};
+
+}
+
+function getDocsTest ( param1, param2, callback ){
+  let filter = param1;
+  let project = param2;
+  masterSchema.masterclientes.find(filter, project)
+  .exec( function(err, data){
+    callback( data );
+  });
+}
+
+
 
 /// Code for sending files to browser START
 exports.sendFile = function ( file, response, callback ){
@@ -191,40 +213,6 @@ function getFileInfo(request) {
     console.log("Mime Type: " + mimetype);
 }
 /// Code for sending files to browser END
-
-/// Examples Code for sending files to browser START
-// var fs = require('fs');
-// var exec = require("child_process").exec;
-// var mime = require('mime');
-// var url = require('url');
-
-// var fileName;
-// var filePath;
-// var mimetype;
-
-// function downloadFile(request, response) {
-//     console.log("Request handler 'downloadFile' was called.");
-
-//     // use exec so that this handler is non-blocking
-//     exec(getFileInfo(request), function(error, stdout, stderr) {
-//         console.log("Have set file info, starting download...");
-
-//         response.setHeader('Content-disposition', 'attachment; filename=' + fileName);
-//         response.setHeader('Content-type', mimetype);
-
-//         var filestream = fs.createReadStream(filePath);
-//         filestream.on('data', function(chunk) {
-//             response.write(chunk);
-//             console.log("Have set file info, starting download...");
-//         });
-//         filestream.on('end', function() {
-//             response.end();
-//         }
-//     );
-
-//     });
-// }
-/// Example Code for sending files to browser END
 
 
 

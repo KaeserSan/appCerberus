@@ -22,21 +22,16 @@ html(lang="en")
 				div
 					span Seleccione cliente:
 				div.selectClientes
-					select#comboClientes
-						//- option(value="prueba") Prueba
+					select#comboClientes(onchange="comboClientesChanged( this )")
 						- var parsedClientes = JSON.parse( clientes );
 						each cliente in parsedClientes
-							- var nomCliente = cliente.nombreCliente;
-							option(value=cliente.codigoCliente) #{nomCliente}
+							- var nomCliente = cliente.datos.nombre;
+							option(value=cliente.codigoCliente, id=cliente._id) #{nomCliente}
 				div
 					span Ejercicio:
 				div.ejercicio
-					select#comboEjercicio
-						//- option(value="2016") 2016
-						- console.log( "Desde layout - combo ejercicios ");
-						- console.log( ejercicios );
+					select#comboEjercicio(onchange="comboEjercicioChanged( this )")
 						- var parsedEjercicios = JSON.parse( ejercicios );
-						- console.log( parsedEjercicios );
 						each ejercicio in parsedEjercicios
 							- var ejercicioValue = ejercicio.year
 							option(value=ejercicioValue) #{ejercicioValue}
