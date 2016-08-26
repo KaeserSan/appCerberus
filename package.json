@@ -10,6 +10,7 @@
   "license": "(c)",
   "dependencies": {
     "body-parser": "^1.15.2",
+    "cookie-parser": "^1.4.3",
     "date-format": "0.0.2",
     "express": "^4.14.0",
     "moment": "^2.14.1",
@@ -17,6 +18,8 @@
     "mongoose": "^4.5.10",
     "path": "^0.12.7",
     "pug": "^2.0.0-beta5",
-    "request-promise": "^4.1.1"
+    "request": "^2.74.0",
+    "request-promise": "^4.1.1",
+    "underscore": "^1.8.3"
   }
 }

@@ -10,9 +10,7 @@ var path = require('path');
 var dateFormat = require('date-format');
 var fs = require('fs');
 var mime = require('mime');
-var Promise = require('promise');
-var _ = require('underscore');
-
+var promise = require('promise');
 
 var main = require("./main.js");
 
@@ -30,37 +28,45 @@ app.use(cookieParser());
 
 
 function getData( req , callback ){
-
   var usuario = req.cookies.usuario;
   var clientes = req.cookies.clientes;
   var data = {};
   var dataEx = [];
-  var aEjercicios = [];
-  var aClientes = [];
-  var oTemp = {};
+  var dataEjercicios = new Promise ( function (resolve, reject){
+        main.getExercices( function( dataEjercicios ){
+          console.log("1a promesa");
+          console.log(dataEjercicios);
+            // data.ejercicios = dataEjercicios;
+        });
+        // dataEjercicios = main.getExercices();
+        resolve( dataEjercicios );
+  });
+  // .then( function( dataPromise ){
+  //   data.ejercicios = dataPromise;
+  //   console.log("Promise 1 ended");
+  //   console.log( dataPromise );
+  //   console.log( data );
+  // });
+                      // main.getExercices( function( dataEjercicios ){
+                      //   data.ejercicios = JSON.stringify(dataEjercicios);
+                      // });
+  var dataClientes =  new Promise (function( resolve, reject){
+        main.getCustomer( clientes, function( dataMongo ){
+          dataEx.push( dataMongo );
+        });
+        resolve( dataEx );
+  });
+                    // main.getCustomer( clientes, function( dataMongo ){
+                    //   dataEx.push( dataMongo );
+                    // });
+  var aPromises = [dataEjercicios, dataClientes];
 
-  var aPromises = [ main.getExercices(), main.getCustomer( clientes ) ];
-
-  Promise.all(aPromises)
+  promise.all(aPromises)
     .then( function( aResults ){
-      aResults[0].forEach( function( data ){
-        oTemp.year = parseInt(data, 10);
-        aEjercicios.push(oTemp);
-      });
-
-      let currentYear = new Date().getFullYear();
-      if ( _.findWhere(aEjercicios, { year: currentYear }) === undefined){
-        aEjercicios.push( { year: currentYear} );
-      }
-
-      data.ejercicios = aEjercicios;
-
-      aResults[1].forEach( function( data ){
-        aClientes.push( data[0] );
-      });
-      data.clientes = aClientes;
-
-      callback ( data );
+      console.log("allPromises");
+      console.log (aResults);
+      console.log( data );
+      // callback (aResults);
     });
 
 }
@@ -75,27 +81,23 @@ app.get('/', function(req, res, next) {
 app.post('/auth', function(req, res, next){
   // main.checkUser( req.params.id , function( data ){   //usar parametros => /auth/:id
   main.checkUser( req.body , function( data ){ //usar post parseado por body-parser
-    // console.log( data );
-    // console.log( data.length );
+    console.log( data );
+    console.log( data.length );
     if (data.length !== 0){
       // console.log( "hay datos de usuario");
       // console.log( data );
-
-      res.clearCookie();
-      res.clearCookie('usuario');
-      res.cookie('usuario', data[0].usuario );
-
       var clientes = [];
       data[0].clientes.map( data => { clientes.push(data._id); });
-
+      res.clearCookie('usuario');
+      res.cookie('usuario', data[0].usuario );
       res.clearCookie('clientes');
       res.cookie('clientes', clientes );
-
-      getData ( req , function( oData ){
-      res.render( "mainMenu", {
-                            clientes: JSON.stringify(oData.clientes),
-                            ejercicios: JSON.stringify(oData.ejercicios)
+      main.getExercices( function( dataEjercicios ){
+        res.render( "mainMenu", {
+                            clientes: JSON.stringify(data[0].clientes),
+                            ejercicios: JSON.stringify(dataEjercicios)
                                 } );
+
       });
     }
     else {
@@ -105,12 +107,12 @@ app.post('/auth', function(req, res, next){
 });
 
 app.get('/oci', function(req, res, next){
-      getData ( req , function( oData ){
-      res.render( "oci", {
-                            clientes: JSON.stringify(oData.clientes),
-                            ejercicios: JSON.stringify(oData.ejercicios)
-                                } );
-      });});
+  getData( req , function( data ){
+    console.log("YA");
+    console.log(data);
+  });
+  res.render( "oci", { clientes: {}, ejercicios: {} } );
+});
 
 app.get('/getDocsOci', function( req, res, next){
   main.getDocsOci( '*', '*', function ( data ){
@@ -163,6 +165,7 @@ app.get('/sendFile', function( req, res, next){
   //   // window.alert("Fichero enviado");
   // } );
 });
+
 
 
 

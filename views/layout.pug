@@ -1,7 +1,7 @@
 doctype
 html(lang="en")
 	head
-		title #{ title } - Cerberus RPC
+		title Cerberus RPC
 		link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css")
 		<!--Foundation-->
 		link(rel="stylesheet" href="/css/foundation/foundation.css" type="text/css")
@@ -33,11 +33,16 @@ html(lang="en")
 				div.ejercicio
 					select#comboEjercicio
 						//- option(value="2016") 2016
+						- console.log( "Desde layout - combo ejercicios ");
+						- console.log( ejercicios );
 						- var parsedEjercicios = JSON.parse( ejercicios );
+						- console.log( parsedEjercicios );
 						each ejercicio in parsedEjercicios
-							- var ejercicioValue = ejercicio
+							- var ejercicioValue = ejercicio.year
 							option(value=ejercicioValue) #{ejercicioValue}
-				//- a(href="/completed", name="menuComplete", class=activeTasks ? "" : "selected").menuButton Completed
+				div.usuario
+					input.userLaben(hidden=true)
+					a#userName
 		div.cerberusContainer
 			aside.asideMenu.col-md-2
 				span Menu
@@ -75,7 +80,7 @@ html(lang="en")
 	//- <!-- table export -->
 	//- script(src="js/jquery-plugin/tableExport.js")
 	//- script(src="js/jquery-plugin/jquery.base64.js")
-
+	script(src="/js/public.js")
 	script.
 		$(document).foundation();
 

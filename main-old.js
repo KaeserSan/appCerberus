@@ -14,8 +14,6 @@ let url = require('url');
 // let Promise = require('promise');
 let rp = require('request-promise');
 var mongoose = require('mongoose');
-var Promise = require('promise');
-mongoose.Promise = Promise;
 
 var mongoUrl="mongodb://localhost:27017/CerberusRPCtest";
 mongoose.connect(mongoUrl);
@@ -50,90 +48,54 @@ exports.checkUserTest = function ( param1, callback ){
     callback( data );
   });
 };
-
-// exports.getExercices = function ( callback ){
-//   let filter = {};
-//   let project = { ejercicio: { id: 1} };
-//   masterSchema.masterclientes
-//     .find()
-//     .distinct("ejercicio.id")
-//     .exec( function(err, data){
-//       console.log("getting...");
-//       console.log( data );
-//       let dataInt = data.map( function( dat ){
-//                       return parseInt( dat, 10 );
-//                     });
-//       let currentYear = new Date().getFullYear();
-//       if (dataInt.indexOf( currentYear ) === -1){
-//         dataInt.push( currentYear );
-//       }
-//       callback( dataInt );
-//       // return( dataInt );
-//     });
-// };
-
-exports.getExercices = function ( ){
-
+exports.getExercices = function ( callback ){
   let filter = {};
   let project = { ejercicio: { id: 1} };
-
-  // return a Promise
-  return masterSchema.masterclientes
-    .find()
-    .distinct("ejercicio.id");
-    // .then( function(err, data){
-    //   if ( err ){ console.log( err );}
-    //   console.log("getting...");
-    //   console.log( data );
-    //   dataInt = data.map( function( dat ){
-    //     return parseInt( dat, 10 );
-    //   });
-    //   let currentYear = new Date().getFullYear();
-    //   if (dataInt.indexOf( currentYear ) === -1){
-    //     console.log("current year is no more, adding... " + currentYear);
-    //     dataInt.push( currentYear );
-    //     console.log( dataInt );
-    //   }
-    //   // callback( dataInt );
-    //   console.log( "returninggggg" );
-    //   console.log( dataInt );
-    //   // return( dataInt );
-    //   return( dataInt );
-    // });
-
-};
-
-
-
-exports.getCustomer = function( aClients, callback ){
-  let result = {};
-  let groupPromisesGetClients = [];
-  let clientsCollection = masterSchema.masterclientes;
-
-  aClients.forEach( function( clientId ){
-
-    let query = { 
-    "_id": ObjectId( clientId ) 
+  masterSchema.masterclientes.find().distinct("ejercicio.id")
+  .exec( function(err, data){
+    console.log("getting...");
+    console.log( data );
+    let dataInt = data.map( function( dat ){
+                    return parseInt( dat, 10 );
+                  });
+    let currentYear = new Date().getFullYear();
+    if (dataInt.indexOf( currentYear ) === -1){
+      dataInt.push( currentYear );
     }
-
-    let projection = {
-      "codigoCliente": 1, 
-      "nombreCliente": 1
-    }
-
-    let promise =  clientsCollection.find(query, projection)
-      .exec( function( err, dataMongo ){
-        return dataMongo;
-      });
-    groupPromisesGetClients.push(promise)
+    callback( dataInt );
+    // return( dataInt );
   });
-
-  return Promise.all(groupPromisesGetClients);
-
+};
+exports.getCustomer = function( aParam, callback ){
+  let result = {};
+  aParam.forEach(function( data ){
+    masterSchema.masterclientes.find({ "_id": ObjectId( data ) }, {"codigoCliente": 1, "nombreCliente": 1})
+    .exec(function( err, dataMongo){
+      callback( dataMongo );
+    });
+  });
 };
 
-
-
+// exports.checkUser = function ( param1, callback ){
+//   // console.log("checkUser: ");
+//   // console.log( param1 );
+//   let filter = {
+//     usuario: param1.usu_form,
+//     password: param1.pass_form
+//    };
+//   let project = {};
+//   // let collection = 'users';
+//   let collection = 'masterusuarios';
+//   let userOk = getMongoData(filter, project, collection, function( data ){
+//     console.log(data.length);
+//     if ( data.length === 0 ) {
+//       callback( false );
+//     }
+//     else {
+//         callback ( { data: data } ) ;
+//       }
+//   });
+// };
 
 
 
@@ -155,7 +117,6 @@ exports.getDocsOci = function ( cliente, ejercicio, callback ){
   });
 };
 
-/// Code for sending files to browser START
 exports.sendFile = function ( file, response, callback ){
   console.log("sendingFile...");
   console.log( file );
@@ -190,9 +151,6 @@ function getFileInfo(request) {
     mimetype = mime.lookup(fileName);
     console.log("Mime Type: " + mimetype);
 }
-/// Code for sending files to browser END
-
-/// Examples Code for sending files to browser START
 // var fs = require('fs');
 // var exec = require("child_process").exec;
 // var mime = require('mime');
@@ -224,9 +182,6 @@ function getFileInfo(request) {
 
 //     });
 // }
-/// Example Code for sending files to browser END
-
-
 
 
 // SAVE DATA MONGOOSE WITH RELATIONED SAVED DATA
@@ -245,7 +200,6 @@ function getFileInfo(request) {
 //     // thats it!
 //   });
 // });
-// SAVE DATA MONGOOSE WITH RELATIONED SAVED DATA
 
 
 
@@ -269,25 +223,25 @@ function getFileInfo(request) {
 
 
 
-//Use Mongo without mongoose
-// function getMongoData ( filter, project, collection, callback ){
-//   filter = filter || {};
-//   project = project || {};
 
-//   // console.log('-------MONGO-------');
-//   // console.log( "filter: ");
-//   // console.log( filter );
-//   // console.log( "project: ");
-//   // console.log( project );
-//   mongo.connect(mongoUrl, function(err, db) {
-//     if (err) { console.log( "Error conecting DB: " + error );}
-//     let result = db.collection(collection).find( filter, project );
-//     result.toArray(function(error, data){
-//       if (error) { console.log("Error en los datos..." + err);}
-//       callback( data );
-//       });
-//     });
-// }
+function getMongoData ( filter, project, collection, callback ){
+  filter = filter || {};
+  project = project || {};
+
+  // console.log('-------MONGO-------');
+  // console.log( "filter: ");
+  // console.log( filter );
+  // console.log( "project: ");
+  // console.log( project );
+  mongo.connect(mongoUrl, function(err, db) {
+    if (err) { console.log( "Error conecting DB: " + error );}
+    let result = db.collection(collection).find( filter, project );
+    result.toArray(function(error, data){
+      if (error) { console.log("Error en los datos..." + err);}
+      callback( data );
+      });
+    });
+}
 
 
 

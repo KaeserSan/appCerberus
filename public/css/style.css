@@ -90,6 +90,9 @@ body.toDoBody {
 .upperMenu a.selected {
   color: white;
 }
+.upperMenu .usuario{
+  float: right;
+}
 .cerberusContainer {
   margin: 0 15px;
   display: flex;
