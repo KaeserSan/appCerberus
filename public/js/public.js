@@ -4,8 +4,7 @@ window.operateEvents = {
     if (respuesta === true) {
       cadena = String(JSON.stringify(row));
       // Doc = cadena.substring(cadena.indexOf('"id":')+5,cadena.indexOf("}"));
-      //alert(Doc);
-      //Exp = cadena.substring(cadena.indexOf("NumeroProcedimiento")+22,cadena.indexOf("NumeroProcedimiento")+31);
+      // alert(Doc);
       // window.location.replace("/editDoc/"+ Doc);
       alert("Edit...");
     }
@@ -13,21 +12,23 @@ window.operateEvents = {
 };
 
 console.log("public.js....");
-var publicLoaded = true;
+
+var publicJsLoaded = true;
 
 
-$('#btnAdd').on('click', function(){
+$('#btnAdd').on('click', function () {
   alert( this.name );
 });
-function comboClientesChanged ( param ){
-  alert ( param.value ) ;
-  console.log( param );
+
+function comboClientesChanged (param) {
+  alert(param.value);
+  console.log(param);
 }
 
 
 $('#ociTable').bootstrapTable({
   method: 'get',
-  url: "/getDocsOci/" + $('#comboClientes').val() + '/' + $('#comboEjercicios').val(),
+  url: '/getDocsOci/' + $('#comboClientes').val() + '/' + $('#comboEjercicios').val(),
   cache: false,
   height: 500,
   striped: true,
@@ -39,10 +40,10 @@ $('#ociTable').bootstrapTable({
   showRefresh: true,
   minimumCountColumns: 2,
   clickToSelect: true,
-  columns: [/*{
+  columns: [/* {
     field: 'state',
     checkbox: true
-  }, */{
+  }, */ {
     field: '_id',
     title: 'id',
     align: 'left',
