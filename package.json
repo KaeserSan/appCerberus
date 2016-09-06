@@ -4,15 +4,25 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "dev": "watchify public/js/public.js -t babelify -o public/js/bundle.js -v & nodemon index.js",
+    "build": "browserify public/js/public.js > public/js/bundle.js",
+    "build:watch": "browserify public/js/public.js -d -o public/js/bundle.js -v",
+    "build:es2015:watch": "watchify public/js/public.js -t babelify -o public/js/bundle.js -v"
   },
   "author": "AtCode",
   "license": "(c)",
   "dependencies": {
+    "babel-preset-es2015": "^6.14.0",
+    "babel-watch": "^2.0.2",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.15.2",
+    "busboy": "^0.2.13",
     "cookie-parser": "^1.4.3",
     "date-format": "0.0.2",
     "express": "^4.14.0",
+    "formidable": "^1.0.17",
+    "jsonwebtoken": "^7.1.9",
     "mime": "^1.3.4",
     "moment": "^2.14.1",
     "mongodb": "^2.2.5",
@@ -23,17 +33,17 @@
     "request": "^2.74.0",
     "request-promise": "^4.1.1",
     "require": "^2.4.20",
-    "underscore": "^1.8.3"
+    "underscore": "^1.8.3",
+    "util": "^0.10.3"
   },
   "devDependencies": {
+    "babelify": "^7.3.0",
     "eslint": "^3.4.0",
     "eslint-config-airbnb": "^10.0.1",
-    "eslint-config-google": "^0.6.0",
-    "eslint-config-standard": "^6.0.0",
     "eslint-plugin-import": "^1.14.0",
     "eslint-plugin-jsx-a11y": "^2.2.0",
     "eslint-plugin-promise": "^2.0.1",
     "eslint-plugin-react": "^6.2.0",
-    "eslint-plugin-standard": "^2.0.0"
+    "watchify": "^3.7.0"
   }
 }

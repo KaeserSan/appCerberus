@@ -1,55 +1,25 @@
 extends layout
 
 block mainContent
-    div.mainContent
-      h2 Oficina de Control Interno
-      div.btn-group(id="toolbar")
-        button.btn.btn-default(type="button", id="btnAdd")
-          i.glyphicon.glyphicon-plus
-        button.btn.btn-default(type="button", id="btn")
-          i.glyphicon.glyphicon-heart
-        button.btn.btn-default(type="button", id="btnDelete")
-          i.glyphicon.glyphicon-trash
-      table(
-        id="ociTable",
-        data-toggle="table"
-        data-url="/getDocsOci/"
-        data-height="350"
-        data-width="600"
-        data-click-to-select="true"
-        data-single-select="true"
-        data-search="true"
-        data-show-refresh="true"
-        data-show-toggle="true"
-        data-show-columns="true"
-        data-show-export="true"
-        data-show-pagination-switch="true"
-        data-pagination="true"
-        data-show-footer="true"
-        data-toolbar="#toolbar"
-        data-search-align='left'
-        data-buttons-align='right'
-        data-toolbar-align='right'
-        )
-        thead
-          tr
-          th(data-field="operate" data-formatter="operateFormatter" data-events="operateEvents") Operacion
-
-      script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js")
-
-      <!--Bootstrap-Table-- https://github.com/wenzhixin/bootstrap-table -->
-      script(src="/js/bootstrap-table/bootstrap-table.js")
-      script(src="js/bootstrap-table/locale/bootstrap-table-es-SP.js")
-      script(src="js/bootstrap-table/extensions/export/bootstrap-table-export.js")
-      script(src="js/bootstrap-table/extensions/editable/bootstrap-table-editable.js")
-
-      <!-- table export -->
-      script(src="js/jquery-plugin/tableExport.js")
-      script(src="js/jquery-plugin/jquery.base64.js")
-      script.
-        if (typeof window.publicJsLoaded == 'undefined') {
-        //the flag was not found, so the code has not run
-        $.getScript("/js/public.js");
-        }
-        //- script(src="/js/public.js")
-
+  div.mainContent
+  h2 Oficina de Control Interno
+  ul.tabs(data-tab, id="tabsOci")
+    li.tab-title.active
+      a(href="#oci_estatutos") Estatutos
+    li.tab-title
+      a(href="#oci_personal") Personal
+    li.tab-title
+      a(href="#oci_actasreuniones") Actas Reuniones
+    li.tab-title
+      a(href="#oci_memoria") Memoria
+    li.tab-title
+      a(href="#oci_scope") Scope
+  div.tabs-content
+    div.content.active(id="oci_estatutos")
+      include ./oci_estatutos.pug
+    div.content(id="oci_personal")
+      include ./oci_personal.pug
+    div.content(id="oci_actasreuniones")
+      include ./oci_actasreuniones.pug
+    div.content(id="oci_memoria")
+      include ./oci_memoria.pug

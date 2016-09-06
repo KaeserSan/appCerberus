@@ -1,197 +1,98 @@
-window.operateEvents = {
-  'click .edit': function ( e, value, row, index ) {
-    var respuesta = confirm("¿Realmente desea editar el documento?");
-    if (respuesta === true) {
-      cadena = String(JSON.stringify(row));
-      // Doc = cadena.substring(cadena.indexOf('"id":')+5,cadena.indexOf("}"));
-      // alert(Doc);
-      // window.location.replace("/editDoc/"+ Doc);
-      alert("Edit...");
-    }
+/* global $ */
+const _ = require('underscore');
+require('./oci/oci_estatutos.js');
+require('./oci/oci_personal.js');
+require('./oci/oci_memoria.js');
+require('./oci/oci_actasreuniones.js');
+
+console.log('...public.js');
+
+$('.btnAdd').on('click', ( e ) => {
+  const collection = (e.currentTarget.parentElement.parentElement.id).replace('_', '/').split('/')[0];
+  const category = ((e.currentTarget.parentElement.parentElement.id).replace('_', '/').split('/')[1]).toLowerCase();
+  const client = $('#comboClientes').val();
+  const clientId = comboClientes.options[comboClientes.selectedIndex].getAttribute('data-cliid');
+  const exercice = $('#comboEjercicios').val();
+  // console.log( `/upload/${collection}/${category}/${client}/${exercice}` );
+  // window.location( `${window.location.origin}/upload/${col}/${client}/${ej}` );
+  const object = {
+    object: {
+      col: collection,
+      cat: category,
+      cli: client,
+      cliId: clientId,
+      ej: exercice,
+    },
+    url: window.location.href,
+  };
+  // console.log( object );
+  if ( category === 'estatutos' || category === 'memoria' || category === 'actasreuniones' ) {
+    $('#oContainer').val( JSON.stringify( object ) );
+    $('#fileUpload').foundation('reveal', 'open');
   }
-};
-
-console.log("public.js....");
-
-var publicJsLoaded = true;
-
-
-$('#btnAdd').on('click', function () {
-  alert( this.name );
+  else if( category === 'personal') {
+    $('#oContainerP').val( JSON.stringify( object ) );
+    $.ajax({
+      url: '/tiposPersonal',
+      type: 'get',
+      data: {},
+      success: function ( data ) {
+        let cadHtml = "";
+        $.each( data, ( i, val ) => {
+          cadHtml += `<option val=${val.tipoPersonal}> ${val.tipoPersonal}</option>`;
+        });
+        $('#TipoPersonal').html( cadHtml );
+      },
+    });
+    $('#personalPopUp').foundation('reveal', 'open');
+  }
 });
 
-function comboClientesChanged (param) {
-  alert(param.value);
-  console.log(param);
+function reloadOciTable( bTable ) {
+  const tName = $(bTable).attr('id');
+  console.log( `...reloading ${tName}` );
+  const client = Number($('#comboClientes').val());
+  const ej = Number($('#comboEjercicios').val());
+  const col = $(bTable).attr('id').replace('-', '/');
+  const ajaxUrl = `/getDocs/${col}/${client}/${ej}`;
+  $( bTable ).bootstrapTable('removeAll');
+  $( bTable ).bootstrapTable('refresh', { url: ajaxUrl });
 }
 
+function comboClientesChanged( param) {
+  $( '.myTable[id]' ).each( ( i, bTable ) => {
+    reloadOciTable( bTable );
+  });
+}
 
-$('#ociTable').bootstrapTable({
-  method: 'get',
-  url: '/getDocsOci/' + $('#comboClientes').val() + '/' + $('#comboEjercicios').val(),
-  cache: false,
-  height: 500,
-  striped: true,
-  pagination: true,
-  pageSize: 50,
-  pageList: [10, 25, 50, 100, 200],
-  search: true,
-  showColumns: true,
-  showRefresh: true,
-  minimumCountColumns: 2,
-  clickToSelect: true,
-  columns: [/* {
-    field: 'state',
-    checkbox: true
-  }, */ {
-    field: '_id',
-    title: 'id',
-    align: 'left',
-    valign: 'top',
-    sortable: true,
-    visible: false,
-  }, {
-    field: 'nombreDocumento',
-    title: 'Nombre',
-    align: 'left',
-    valign: 'top',
-    sortable: true,
-  }, {
-    field: 'nombreFichero',
-    title: 'Fichero',
-    align: 'left',
-    valign: 'top',
-    sortable: true,
-    visible: true,
-  }, {
-    field: 'operate',
-    title: 'Operacion',
-    align: 'center',
-    valign: 'top',
-    clickToSelect: false,
-    formatter: operateFormatter,
-    events: operateEvents
-  }]
+function comboEjerciciosChanged(param) {
+  $( '.myTable[id]' ).each( ( i, bTable ) => {
+    reloadOciTable( bTable );
+  });
+  // alert( param.currentTarget.value );
+}
+
+$('#comboClientes').on('change', ( e ) => {
+  comboClientesChanged( e );
 });
 
-function operateFormatter(value, row, index) {
-  return [
-    '<a class="edit ml10" href="javascript:void(0)" title="Editar">',
-      '<i class="glyphicon glyphicon-edit"></i>',
-    '</a>',
-    '<a class="gap ml10"  title="">',
-       '<i>   </i>',
-    '</a>'
-  ].join('');
+$('#comboEjercicios').on('change', ( e ) => {
+  comboEjerciciosChanged( e );
+});
+
+$('.myTable').on('click-cell.bs.table', ( field, value, row, $element ) => {
+  if ( value === 'nombreDocumento') {
+    const fileToDownload = window.location.origin + '/getFile/'+$element.nombreFichero;
+    const win = window.open(fileToDownload, '_blank');
+    if (win) {
+      win.focus();
+    } else {
+      alert('Por favor, active ventanas emergentes para ver el contenido.');
+    }
   }
-
-$('#ociTable').on('all.bs.table', function (e, name, args) {
-        // console.log('Event:', name, ', data:', args);
-    })
-    .on('click-row.bs.table', function (e, row, $element) {
-        // $result.text('Event: click-row.bs.table');
-        // alert( row.nombreDocumento )
-        console.log("redirecting...")
-        window.location('/sendFile') 
-        // $.ajax({
-        //     url: '/sendFile',
-        //     type: 'get',
-        //     data: {
-        //       filename: row.nombreDocumento,
-        //       filepath: row.nombreFichero
-        //     },
-        //     // success: function (data) {
-        //     //   data
-        //     // }
-        //   });
-    });
-
-// $(document).ready(function(){
-//  };
+});
 
 
+module.exports.comboClientesChanged = comboClientesChanged;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// $('.btnDelete').on('click', function( e ){
-//   e.preventDefault();
-//   console.log( "ajax: "+ $(this)[0].attributes.action.nodeValue );
-//   console.log( window.location );
-//   console.log( window.location.origin + $(this)[0].attributes.action.nodeValue );
-
-//   var $self = $(this);
-
-//   $.ajax({
-//       url: $(this)[0].attributes.action.nodeValue,
-//       type: 'delete',
-//       success: function() {
-//         // window.location.redirect = "/tasks";
-//         $self.parent().remove();
-//       }
-//     });
-// });
-
-// $('.btnComplete').on('click', function( e ){
-//   e.preventDefault();
-//   var $self = $(this);
-//   $.ajax({
-//       url: $(this)[0].attributes.action.nodeValue,
-//       type: 'post',
-//       success: function() {
-//         $self.parent().remove();
-//       }
-//     });
-// });
-
-// $('.btnCompleteAll').on('click', function( e ){
-//   var res = confirm("Are you sure you want to complete all tasks?");
-//   if ( res ){
-//     e.preventDefault();
-//     var $self = $(this);
-//     // console.log( $self.parent );
-//     $.ajax({
-//         url: $(this)[0].attributes.action.nodeValue,
-//         type: 'post',
-//         success: function() {
-//           console.log($('.tasks'));
-//           $('.tasks')[0].innerHTML="";
-//         }
-//       });
-//   }
-// });
-
-
-// $('.menuButton').on('click', function( e ){
-//   e.preventDefault();
-//   console.log( "button: "+ this );
-//     $(".menuButton").removeClass('selected');
-//     $(this).addClass('selected');
-//     window.location.href = this ;
-// });

@@ -1,0 +1,15 @@
+extends layout
+
+block mainContent
+  div.mainContent
+  h2 Protocolos Vigentes
+  ul.tabs(data-tab, id="tabsProtocolos")
+    li.tab-title.active
+      a(href="#protocolos_economicos") Protocolos Económicos
+    li.tab-title
+      a(href="#protocolos_generales") Protocolos Generales
+  div.tabs-content
+    div.content.active(id="protocolos_economicos")
+      include ./protocolos_economicos.pug
+    div.content(id="protocolos_generales")
+      include ./protocolos_generales.pug

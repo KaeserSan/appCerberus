@@ -1,8 +1,9 @@
-doctype
+doctype HTML
 html(lang="en")
 	head
 		title Cerberus RPC
-		link(rel="stylesheet", href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css")
+		//- link( rel="stylesheet", href="/css/bootstrap/bootstrap-3.3.6.min.css")
+		link( rel="stylesheet", href="/css/bootstrap/bootstrap-3.3.7.min.css")
 		<!--Foundation-->
 		link(rel="stylesheet" href="/css/foundation/foundation.css" type="text/css")
 		//- link(rel="stylesheet" href="/css/foundation/foundation.min.css" type="text/css")
@@ -15,67 +16,70 @@ html(lang="en")
 
 	body.cerberusBody
 		header.cerberusHeader
-			div.logo
-				img(src="/img/Cerberus_Logo.png")
-			div.upperMenu
-				//- a(href="/tasks", name="menuTasks", class=activeTasks ? "selected" : "").menuButton List Tasks
-				div
-					span Seleccione cliente:
-				div.selectClientes
-					select#comboClientes(onchange="comboClientesChanged( this )")
-						- var parsedClientes = JSON.parse( clientes );
-						each cliente in parsedClientes
-							- var nomCliente = cliente.datos.nombre;
-							option(value=cliente.codigoCliente, id=cliente._id) #{nomCliente}
-				div
-					span Ejercicio:
-				div.ejercicio
-					select#comboEjercicio(onchange="comboEjercicioChanged( this )")
-						- var parsedEjercicios = JSON.parse( ejercicios );
-						each ejercicio in parsedEjercicios
-							- var ejercicioValue = ejercicio.year
-							option(value=ejercicioValue) #{ejercicioValue}
-				div.usuario
-					input.userLaben(hidden=true)
-					a#userName
+				div.logo
+					img(src="/img/Cerberus_Logo.png")
+				div.upperMenu
+					//- a(href="/tasks", name="menuTasks", class=activeTasks ? "selected" : "").menuButton List Tasks
+					div.clientes
+						div.clientesLabel
+							span Seleccione cliente:
+						div.selectClientes
+							select#comboClientes( data-cliid="" )
+								- var parsedClientes = JSON.parse( clientes );
+								each cliente in parsedClientes
+									- var nomCliente = cliente.datos.nombre;
+									option(value=cliente.datos.codigo, data-cliid=cliente._id) #{nomCliente}
+					div.ejercicios
+						div.ejercicioLabel
+							span Ejercicio:
+						div.ejercicio
+							select#comboEjercicios( val="" )
+								- var parsedEjercicios = JSON.parse( ejercicios );
+								each ejercicio in parsedEjercicios
+									- var ejercicioValue = ejercicio.year
+									option(value=ejercicioValue) #{ejercicioValue}
+					div.usuario.userLabel
+						//- input.userLabel(hidden=false value=userName)
+						p Hola
+							a(href="#" id="userName") userName
+		include Pop-upload
+		include Pop-personal
 		div.cerberusContainer
 			aside.asideMenu.col-md-2
 				span Menu
 				div.menuLateral
-					a(href="/planAccion") Plan Acción
-					a(href="/oci") OCI
-					a(href="/mapaRiesgos") Mapa de Riesgos
-					a(href="/auditorias") Auditorias y Controles
-					a(href="/protocolos") Protocolos Vigentes
-					a(href="/canalEtico") Canal Ético
-					a(href="/registros") Registros
-					a(href="/formacion") Formación
-					a(href="/gestion") Gestión Expedientes
-					a(href="/agenda") Agenda RPC
-					a(href="/plantillas") Plantillas
-					a(href="/atenuantes") Atenuantes Gestión
+					include menuLateral
 			div.mainContent.col-md-8
 				block mainContent
 			div.semaforo.col-md-2
 				img(src="/img/semaforo.png")
 
 
-	script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js")
+	//- script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js")
+	script(src="js/jquery-2.2.4/jquery.min.js")
 
-
+	<!-- Bootstrap -->
+	script(src="/js/bootstrap/bootstrap-3.3.7.min.js")
 	<!--Foundation-->
-	//- script(src="/js/foundation/foundation.min.js")
-	script(src="/js/foundation/foundation.js")
+	script(src="/js/foundation/foundation.min.js")
+	//- script(src="/js/foundation/foundation.js")
 	script(src="/js/foundation/foundation.topbar.js")
-	//- <!--Bootstrap-Table-- https://github.com/wenzhixin/bootstrap-table -->
-	//- script(src="js/bootstrap-table/bootstrap-table.js")
-	//- script(src="js/bootstrap-table/locale/bootstrap-table-es-SP.js")
-	//- script(src="js/bootstrap-table/extensions/export/bootstrap-table-export.js")
-	//- script(src="js/bootstrap-table/extensions/editable/bootstrap-table-editable.js")
-	//- <!-- table export -->
-	//- script(src="js/jquery-plugin/tableExport.js")
-	//- script(src="js/jquery-plugin/jquery.base64.js")
-	script(src="/js/public.js")
+	<!--Bootstrap-Table-- https://github.com/wenzhixin/bootstrap-table -->
+	script(src="js/bootstrap-table/bootstrap-table.js")
+	script(src="js/bootstrap-table/locale/bootstrap-table-es-SP.js")
+	script(src="js/bootstrap-table/extensions/toolbar/bootstrap-table-toolbar.js")
+	script(src="js/bootstrap-table/extensions/export/bootstrap-table-export.js")
+	script(src="js/bootstrap-table/extensions/editable/bootstrap-table-editable.js")
+	<!-- table export -->
+	script(src="js/jquery-plugin/tableExport.js")
+	script(src="js/jquery-plugin/jquery.base64.js")
+	//- script(src="/js/public.js")
+	script(src="/js/bundle.js")
+	//- script(src="/js/oci/oci_estatutos.js")
+	//- script(src="/js/oci/oci_personal.js")
+	//- script(src="/js/oci/oci_actasReuniones.js")
+	//- script(src="/js/oci/oci_memoria.js")
 	script.
 		$(document).foundation();
+
 

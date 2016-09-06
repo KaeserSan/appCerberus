@@ -1,0 +1,24 @@
+div.reveal-modal(id="personalPopUp" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog" style="width: 50%")
+      form(id="personalForm" method="POST" action='/upload' enctype="multipart/form-data" name="uploadedFileP")
+        h2(id="modalTitle") AT CerberusRPC
+        input(type="hidden" name="oContainer" id="oContainerP")
+        input(type="file" name="uploadFile" id="uploadFileP" value="" required)
+        div.fileUploadFields
+          div.nombre
+            span Nombre y apellidos
+              input(type="text" name="nombre" id="nombreP" value="" placeholder="Nombre de la persona..." required)
+          div.cargo
+            span Cargo
+              input(type="text" name="cargo" id="cargoP" required)
+          div.fechas.col-md-4
+            span Fecha Alta
+              input(type="text" name="fechaAlta" id="fechaAltaP")
+            span Fecha Baja
+              input(type="text" name="fechaBaja" id="fechaBajaP")
+          div.tipoPersonal.col-md-4
+            span Tipo de Personal
+            select#TipoPersonal(val="" name="tipoPersonal")
+        p.lead
+          div.row
+            div.col-md-2.col-md-offset-4.col-xs-2.col-xs-offset-4
+              button.radius(id="btnUploadP" style="margin-top: 12px") Seleccionar

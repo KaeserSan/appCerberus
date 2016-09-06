@@ -1,0 +1,16 @@
+div.reveal-modal(id="fileUpload" data-reveal aria-labelledby="modalTitle" aria-hidden="true" role="dialog" style="width: 50%")
+      form(id="uploadForm" method="POST" action='/upload' enctype="multipart/form-data" name="uploadedFile")
+        h2(id="modalTitle") AT CerberusRPC
+        input(type="hidden" name="oContainer" id="oContainer")
+        input(type="file" name="uploadFile" id="uploadFile" value="" required)
+        div.fileUploadFields
+          div.fileUploadResp.col-md-8
+            span Responsable
+              input(type="text" name="resp" id="resp" required)
+          div.fileUploadVer.col-md-4
+            span Versión
+              input(type="text" name="ver" id="ver")
+        p.lead
+          div.row
+            div.col-md-2.col-md-offset-4.col-xs-2.col-xs-offset-4
+              button.radius(id="btnUpload" style="margin-top: 12px") Seleccionar

@@ -1,0 +1,19 @@
+extends layout
+
+block mainContent
+  div.mainContent
+  h2 Registros
+  ul.tabs(data-tab, id="tabsRegistros")
+    li.tab-title.active
+      a(href="#registros_documentos") Documentos Acreditativos
+    li.tab-title
+      a(href="#registros_denuncias") Denuncias
+    li.tab-title
+      a(href="#registros_propuestas") Propuestas de Sanción
+  div.tabs-content
+    div.content.active(id="registros_documentos")
+      include ./registros_documentos.pug
+    div.content(id="registros_denuncias")
+      include ./registros_denuncias.pug
+    div.content(id="registros_propuestas")
+      include ./registros_propuestas.pug
