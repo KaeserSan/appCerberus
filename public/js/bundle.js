@@ -1608,13 +1608,14 @@ $('#oci-actasreuniones').bootstrapTable({
   }]
 });
 
-},{"../utils.js":7}],3:[function(require,module,exports){
+},{"../utils.js":17}],3:[function(require,module,exports){
 'use strict';
 
 console.log("oci_estatutos.js running...");
 
 var operateFormatter = require('../utils.js').operateFormatter;
 var operateEvents = require('../utils.js').operateEvents;
+
 var client = $('#comboClientes').val();
 var ej = $('#comboEjercicios').val();
 var ajaxUrl = '/getDocs/oci/estatutos/' + client + '/' + ej;
@@ -1668,7 +1669,7 @@ $('#oci-estatutos').bootstrapTable({
   }]
 });
 
-},{"../utils.js":7}],4:[function(require,module,exports){
+},{"../utils.js":17}],4:[function(require,module,exports){
 'use strict';
 
 console.log("oci_memoria.js running...");
@@ -1728,7 +1729,7 @@ $('#oci-memoria').bootstrapTable({
   }]
 });
 
-},{"../utils.js":7}],5:[function(require,module,exports){
+},{"../utils.js":17}],5:[function(require,module,exports){
 'use strict';
 
 console.log("oci_personal.js running...");
@@ -1823,7 +1824,432 @@ $('#oci-personal').bootstrapTable({
   }]
 });
 
-},{"../utils.js":7}],6:[function(require,module,exports){
+},{"../utils.js":17}],6:[function(require,module,exports){
+'use strict';
+
+console.log("plantillas_auditorias.js running...");
+
+var operateFormatter = require('../utils.js').operateFormatter;
+var operateEvents = require('../utils.js').operateEvents;
+
+var client = $('#comboClientes').val();
+var ej = $('#comboEjercicios').val();
+var ajaxUrl = '/getDocs/plantillas/auditorias/' + client + '/' + ej;
+console.log('...loading Plantillas Table ' + ajaxUrl);
+
+$('#plantillas-auditorias').bootstrapTable({
+  method: 'GET',
+  url: ajaxUrl,
+  columns: [{
+    field: '_id',
+    title: 'id',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: false
+  }, {
+    field: 'nombreDocumento',
+    title: 'Nombre',
+    align: 'left',
+    valign: 'top',
+    sortable: true
+  }, {
+    field: 'nombreFichero',
+    title: 'Fichero',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: false
+  }, {
+    field: 'version',
+    title: 'version',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: true
+  }, {
+    field: 'responsable',
+    title: 'Responsable',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: true
+  }, {
+    field: 'operate',
+    title: 'Operacion',
+    align: 'center',
+    valign: 'top',
+    clickToSelect: false,
+    formatter: operateFormatter,
+    events: operateEvents
+  }]
+});
+
+},{"../utils.js":17}],7:[function(require,module,exports){
+'use strict';
+
+console.log("plantillas_controles.js running...");
+
+var operateFormatter = require('../utils.js').operateFormatter;
+var operateEvents = require('../utils.js').operateEvents;
+
+var client = $('#comboClientes').val();
+var ej = $('#comboEjercicios').val();
+var ajaxUrl = '/getDocs/plantillas/controles/' + client + '/' + ej;
+console.log('...loading Plantillas Table ' + ajaxUrl);
+
+$('#plantillas-controles').bootstrapTable({
+  method: 'GET',
+  url: ajaxUrl,
+  columns: [{
+    field: '_id',
+    title: 'id',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: false
+  }, {
+    field: 'nombreDocumento',
+    title: 'Nombre',
+    align: 'left',
+    valign: 'top',
+    sortable: true
+  }, {
+    field: 'nombreFichero',
+    title: 'Fichero',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: false
+  }, {
+    field: 'version',
+    title: 'version',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: true
+  }, {
+    field: 'responsable',
+    title: 'Responsable',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: true
+  }, {
+    field: 'operate',
+    title: 'Operacion',
+    align: 'center',
+    valign: 'top',
+    clickToSelect: false,
+    formatter: operateFormatter,
+    events: operateEvents
+  }]
+});
+
+},{"../utils.js":17}],8:[function(require,module,exports){
+'use strict';
+
+console.log("plantillas_formacion.js running...");
+
+var operateFormatter = require('../utils.js').operateFormatter;
+var operateEvents = require('../utils.js').operateEvents;
+
+var client = $('#comboClientes').val();
+var ej = $('#comboEjercicios').val();
+var ajaxUrl = '/getDocs/plantillas/formacion/' + client + '/' + ej;
+console.log('...loading Plantillas Table ' + ajaxUrl);
+
+$('#plantillas-formacion').bootstrapTable({
+  method: 'GET',
+  url: ajaxUrl,
+  columns: [{
+    field: '_id',
+    title: 'id',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: false
+  }, {
+    field: 'nombreDocumento',
+    title: 'Nombre',
+    align: 'left',
+    valign: 'top',
+    sortable: true
+  }, {
+    field: 'nombreFichero',
+    title: 'Fichero',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: false
+  }, {
+    field: 'version',
+    title: 'version',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: true
+  }, {
+    field: 'responsable',
+    title: 'Responsable',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: true
+  }, {
+    field: 'operate',
+    title: 'Operacion',
+    align: 'center',
+    valign: 'top',
+    clickToSelect: false,
+    formatter: operateFormatter,
+    events: operateEvents
+  }]
+});
+
+},{"../utils.js":17}],9:[function(require,module,exports){
+'use strict';
+
+console.log("plantillas_oci.js running...");
+
+var operateFormatter = require('../utils.js').operateFormatter;
+var operateEvents = require('../utils.js').operateEvents;
+
+var client = $('#comboClientes').val();
+var ej = $('#comboEjercicios').val();
+var ajaxUrl = '/getDocs/plantillas/oci/' + client + '/' + ej;
+console.log('...loading Plantillas Table ' + ajaxUrl);
+
+$('#plantillas-oci').bootstrapTable({
+  method: 'GET',
+  url: ajaxUrl,
+  columns: [{
+    field: '_id',
+    title: 'id',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: false
+  }, {
+    field: 'nombreDocumento',
+    title: 'Nombre',
+    align: 'left',
+    valign: 'top',
+    sortable: true
+  }, {
+    field: 'nombreFichero',
+    title: 'Fichero',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: false
+  }, {
+    field: 'version',
+    title: 'version',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: true
+  }, {
+    field: 'responsable',
+    title: 'Responsable',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: true
+  }, {
+    field: 'operate',
+    title: 'Operacion',
+    align: 'center',
+    valign: 'top',
+    clickToSelect: false,
+    formatter: operateFormatter,
+    events: operateEvents
+  }]
+});
+
+},{"../utils.js":17}],10:[function(require,module,exports){
+'use strict';
+
+console.log("plantillas_protocolos.js running...");
+
+var operateFormatter = require('../utils.js').operateFormatter;
+var operateEvents = require('../utils.js').operateEvents;
+
+var client = $('#comboClientes').val();
+var ej = $('#comboEjercicios').val();
+var ajaxUrl = '/getDocs/plantillas/protocolos/' + client + '/' + ej;
+console.log('...loading Plantillas Table ' + ajaxUrl);
+
+$('#plantillas-protocolos').bootstrapTable({
+  method: 'GET',
+  url: ajaxUrl,
+  columns: [{
+    field: '_id',
+    title: 'id',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: false
+  }, {
+    field: 'nombreDocumento',
+    title: 'Nombre',
+    align: 'left',
+    valign: 'top',
+    sortable: true
+  }, {
+    field: 'nombreFichero',
+    title: 'Fichero',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: false
+  }, {
+    field: 'version',
+    title: 'version',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: true
+  }, {
+    field: 'responsable',
+    title: 'Responsable',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: true
+  }, {
+    field: 'operate',
+    title: 'Operacion',
+    align: 'center',
+    valign: 'top',
+    clickToSelect: false,
+    formatter: operateFormatter,
+    events: operateEvents
+  }]
+});
+
+},{"../utils.js":17}],11:[function(require,module,exports){
+'use strict';
+
+console.log("protocolos_economicos.js running...");
+
+var operateFormatter = require('../utils.js').operateFormatter;
+var operateEvents = require('../utils.js').operateEvents;
+var client = $('#comboClientes').val();
+var ej = $('#comboEjercicios').val();
+var ajaxUrl = '/getDocs/protocolos/economicos/' + client + '/' + ej;
+console.log('...loading Protocolos Table ' + ajaxUrl);
+
+$('#protocolos-economicos').bootstrapTable({
+  method: 'GET',
+  url: ajaxUrl,
+  columns: [{
+    field: '_id',
+    title: 'id',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: false
+  }, {
+    field: 'nombreDocumento',
+    title: 'Nombre',
+    align: 'left',
+    valign: 'top',
+    sortable: true
+  }, {
+    field: 'nombreFichero',
+    title: 'Fichero',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: false
+  }, {
+    field: 'version',
+    title: 'version',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: true
+  }, {
+    field: 'responsable',
+    title: 'Responsable',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: true
+  }, {
+    field: 'operate',
+    title: 'Operacion',
+    align: 'center',
+    valign: 'top',
+    clickToSelect: false,
+    formatter: operateFormatter,
+    events: operateEvents
+  }]
+});
+
+},{"../utils.js":17}],12:[function(require,module,exports){
+'use strict';
+
+console.log("protocolos_generales.js running...");
+
+var operateFormatter = require('../utils.js').operateFormatter;
+var operateEvents = require('../utils.js').operateEvents;
+var client = $('#comboClientes').val();
+var ej = $('#comboEjercicios').val();
+var ajaxUrl = '/getDocs/protocolos/generales/' + client + '/' + ej;
+console.log('...loading Protocolos Table ' + ajaxUrl);
+
+$('#protocolos-generales').bootstrapTable({
+  method: 'GET',
+  url: ajaxUrl,
+  columns: [{
+    field: '_id',
+    title: 'id',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: false
+  }, {
+    field: 'nombreDocumento',
+    title: 'Nombre',
+    align: 'left',
+    valign: 'top',
+    sortable: true
+  }, {
+    field: 'nombreFichero',
+    title: 'Fichero',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: false
+  }, {
+    field: 'version',
+    title: 'version',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: true
+  }, {
+    field: 'responsable',
+    title: 'Responsable',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: true
+  }, {
+    field: 'operate',
+    title: 'Operacion',
+    align: 'center',
+    valign: 'top',
+    clickToSelect: false,
+    formatter: operateFormatter,
+    events: operateEvents
+  }]
+});
+
+},{"../utils.js":17}],13:[function(require,module,exports){
 'use strict';
 
 /* global $ */
@@ -1832,6 +2258,16 @@ require('./oci/oci_estatutos.js');
 require('./oci/oci_personal.js');
 require('./oci/oci_memoria.js');
 require('./oci/oci_actasreuniones.js');
+require('./protocolos/protocolos-economicos.js');
+require('./protocolos/protocolos-generales.js');
+require('./registros/registros_documentos.js');
+require('./registros/registros_denuncias.js');
+require('./registros/registros_propuestas.js');
+require('./plantillas/plantillas_oci.js');
+require('./plantillas/plantillas_auditorias.js');
+require('./plantillas/plantillas_controles.js');
+require('./plantillas/plantillas_formacion.js');
+require('./plantillas/plantillas_protocolos.js');
 
 console.log('...public.js');
 
@@ -1853,8 +2289,8 @@ $('.btnAdd').on('click', function (e) {
     },
     url: window.location.href
   };
-  // console.log( object );
-  if (category === 'estatutos' || category === 'memoria' || category === 'actasreuniones') {
+  console.log(object);
+  if (category === 'estatutos' || category === 'memoria' || category === 'actasreuniones' || category === 'economicos' || category === 'generales' || category === 'documentos' || category === 'denuncias' || category === 'propuestas' || category === 'oci' || category === 'auditorias' || category === 'controles' || category === 'protocolos' || category === 'formacion') {
     $('#oContainer').val(JSON.stringify(object));
     $('#fileUpload').foundation('reveal', 'open');
   } else if (category === 'personal') {
@@ -1921,8 +2357,193 @@ $('.myTable').on('click-cell.bs.table', function (field, value, row, $element) {
 
 module.exports.comboClientesChanged = comboClientesChanged;
 
-},{"./oci/oci_actasreuniones.js":2,"./oci/oci_estatutos.js":3,"./oci/oci_memoria.js":4,"./oci/oci_personal.js":5,"underscore":1}],7:[function(require,module,exports){
+},{"./oci/oci_actasreuniones.js":2,"./oci/oci_estatutos.js":3,"./oci/oci_memoria.js":4,"./oci/oci_personal.js":5,"./plantillas/plantillas_auditorias.js":6,"./plantillas/plantillas_controles.js":7,"./plantillas/plantillas_formacion.js":8,"./plantillas/plantillas_oci.js":9,"./plantillas/plantillas_protocolos.js":10,"./protocolos/protocolos-economicos.js":11,"./protocolos/protocolos-generales.js":12,"./registros/registros_denuncias.js":14,"./registros/registros_documentos.js":15,"./registros/registros_propuestas.js":16,"underscore":1}],14:[function(require,module,exports){
 'use strict';
+
+console.log("registros_denuncias.js running...");
+
+var operateFormatter = require('../utils.js').operateFormatter;
+var operateEvents = require('../utils.js').operateEvents;
+
+var client = $('#comboClientes').val();
+var ej = $('#comboEjercicios').val();
+var ajaxUrl = '/getDocs/registros/denuncias/' + client + '/' + ej;
+console.log('...loading Registros Table ' + ajaxUrl);
+
+$('#registros-denuncias').bootstrapTable({
+  method: 'GET',
+  url: ajaxUrl,
+  columns: [{
+    field: '_id',
+    title: 'id',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: false
+  }, {
+    field: 'nombreDocumento',
+    title: 'Nombre',
+    align: 'left',
+    valign: 'top',
+    sortable: true
+  }, {
+    field: 'nombreFichero',
+    title: 'Fichero',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: false
+  }, {
+    field: 'version',
+    title: 'version',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: true
+  }, {
+    field: 'responsable',
+    title: 'Responsable',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: true
+  }, {
+    field: 'operate',
+    title: 'Operacion',
+    align: 'center',
+    valign: 'top',
+    clickToSelect: false,
+    formatter: operateFormatter,
+    events: operateEvents
+  }]
+});
+
+},{"../utils.js":17}],15:[function(require,module,exports){
+'use strict';
+
+console.log("registros_documentos.js running...");
+
+var operateFormatter = require('../utils.js').operateFormatter;
+var operateEvents = require('../utils.js').operateEvents;
+
+var client = $('#comboClientes').val();
+var ej = $('#comboEjercicios').val();
+var ajaxUrl = '/getDocs/registros/documentos/' + client + '/' + ej;
+console.log('...loading Registros Table ' + ajaxUrl);
+
+$('#registros-documentos').bootstrapTable({
+  method: 'GET',
+  url: ajaxUrl,
+  columns: [{
+    field: '_id',
+    title: 'id',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: false
+  }, {
+    field: 'nombreDocumento',
+    title: 'Nombre',
+    align: 'left',
+    valign: 'top',
+    sortable: true
+  }, {
+    field: 'nombreFichero',
+    title: 'Fichero',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: false
+  }, {
+    field: 'version',
+    title: 'version',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: true
+  }, {
+    field: 'responsable',
+    title: 'Responsable',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: true
+  }, {
+    field: 'operate',
+    title: 'Operacion',
+    align: 'center',
+    valign: 'top',
+    clickToSelect: false,
+    formatter: operateFormatter,
+    events: operateEvents
+  }]
+});
+
+},{"../utils.js":17}],16:[function(require,module,exports){
+'use strict';
+
+console.log("registros_propuestas.js running...");
+
+var operateFormatter = require('../utils.js').operateFormatter;
+var operateEvents = require('../utils.js').operateEvents;
+
+var client = $('#comboClientes').val();
+var ej = $('#comboEjercicios').val();
+var ajaxUrl = '/getDocs/registros/propuestas/' + client + '/' + ej;
+console.log('...loading Registros Table ' + ajaxUrl);
+
+$('#registros-propuestas').bootstrapTable({
+  method: 'GET',
+  url: ajaxUrl,
+  columns: [{
+    field: '_id',
+    title: 'id',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: false
+  }, {
+    field: 'nombreDocumento',
+    title: 'Nombre',
+    align: 'left',
+    valign: 'top',
+    sortable: true
+  }, {
+    field: 'nombreFichero',
+    title: 'Fichero',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: false
+  }, {
+    field: 'version',
+    title: 'version',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: true
+  }, {
+    field: 'responsable',
+    title: 'Responsable',
+    align: 'left',
+    valign: 'top',
+    sortable: true,
+    visible: true
+  }, {
+    field: 'operate',
+    title: 'Operacion',
+    align: 'center',
+    valign: 'top',
+    clickToSelect: false,
+    formatter: operateFormatter,
+    events: operateEvents
+  }]
+});
+
+},{"../utils.js":17}],17:[function(require,module,exports){
+'use strict';
+
+var comboClientesChanged = require('./public.js').comboClientesChanged;
 
 function operateFormatter(value, row, index) {
   return ['<a class="edit ml10" href="javascript:void(0)" title="Editar">', '<i class="glyphicon glyphicon-edit"></i>', '</a>', '<a class="gap ml10"  title="">', '<i>   </i>', '</a>', '<a class="delete ml10" href="javascript:void(0)" title="Borrar">', '<i class="glyphicon glyphicon-remove"></i>', '</a>', '<a class="gap ml10"  title="">', '<i>   </i>', '</a>'].join('');
@@ -1989,4 +2610,4 @@ module.exports = {
   operateEvents: operateEvents
 };
 
-},{}]},{},[6]);
+},{"./public.js":13}]},{},[13]);

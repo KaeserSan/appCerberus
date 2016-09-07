@@ -1,14 +1,14 @@
-console.log("oci_estatutos.js running...");
+console.log("plantillas_oci.js running...");
 
 const operateFormatter = require('../utils.js').operateFormatter;
 const operateEvents = require('../utils.js').operateEvents;
 
 const client = $('#comboClientes').val();
 const ej = $('#comboEjercicios').val();
-const ajaxUrl = `/getDocs/oci/estatutos/${client}/${ej}`;
-console.log( `...loading Oci Table ${ajaxUrl}` );
+const ajaxUrl = `/getDocs/plantillas/oci/${client}/${ej}`;
+console.log( `...loading Plantillas Table ${ajaxUrl}` );
 
-$('#oci-estatutos').bootstrapTable({
+$('#plantillas-oci').bootstrapTable({
   method: 'GET',
   url: ajaxUrl,
   columns: [{

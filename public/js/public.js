@@ -4,6 +4,16 @@ require('./oci/oci_estatutos.js');
 require('./oci/oci_personal.js');
 require('./oci/oci_memoria.js');
 require('./oci/oci_actasreuniones.js');
+require('./protocolos/protocolos-economicos.js');
+require('./protocolos/protocolos-generales.js');
+require('./registros/registros_documentos.js');
+require('./registros/registros_denuncias.js');
+require('./registros/registros_propuestas.js');
+require('./plantillas/plantillas_oci.js');
+require('./plantillas/plantillas_auditorias.js');
+require('./plantillas/plantillas_controles.js');
+require('./plantillas/plantillas_formacion.js');
+require('./plantillas/plantillas_protocolos.js');
 
 console.log('...public.js');
 
@@ -25,8 +35,15 @@ $('.btnAdd').on('click', ( e ) => {
     },
     url: window.location.href,
   };
-  // console.log( object );
-  if ( category === 'estatutos' || category === 'memoria' || category === 'actasreuniones' ) {
+  console.log( object );
+  if (   category === 'estatutos'      || category === 'memoria' 
+      || category === 'actasreuniones' || category === 'economicos' 
+      || category === 'generales'      || category === 'documentos'
+      || category === 'denuncias'      || category === 'propuestas'
+      || category === 'oci'            || category === 'auditorias'
+      || category === 'controles'      || category === 'protocolos'
+      || category === 'formacion' 
+      ) {
     $('#oContainer').val( JSON.stringify( object ) );
     $('#fileUpload').foundation('reveal', 'open');
   }

@@ -1,3 +1,5 @@
+const comboClientesChanged = require('./public.js').comboClientesChanged;
+
 function operateFormatter(value, row, index) {
     return [
       '<a class="edit ml10" href="javascript:void(0)" title="Editar">',

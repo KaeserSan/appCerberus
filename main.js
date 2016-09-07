@@ -152,7 +152,14 @@ function getDocs( filtro, proj ) {
     categoria: category,
   };
   let project = proj || {};
-  if ( category === 'estatutos' || category === 'memoria' || category === 'actasreuniones' ) {
+  if (   category === 'estatutos'      || category === 'memoria' 
+      || category === 'actasreuniones' || category === 'economicos' 
+      || category === 'generales'      || category === 'documentos'
+      || category === 'denuncias'      || category === 'propuestas'
+      || category === 'oci'            || category === 'auditorias'
+      || category === 'controles'      || category === 'protocolos'
+      || category === 'formacion' 
+      ) {
     // console.log('model documentos');
     return process.getModel('documents').find(filter, project);
   }
@@ -186,7 +193,17 @@ function addFile( oParam, callback ) {
     files: oParam.files,
     fields: oParam.fields,
   };
-  if ( datos.category === 'estatutos' || datos.category === 'memoria' || datos.category === 'actasreuniones' ) {
+  console.log( datos );
+  const category = datos.category;
+  
+  if (   category === 'estatutos'      || category === 'memoria' 
+      || category === 'actasreuniones' || category === 'economicos' 
+      || category === 'generales'      || category === 'documentos'
+      || category === 'denuncias'      || category === 'propuestas'
+      || category === 'oci'            || category === 'auditorias'
+      || category === 'controles'      || category === 'protocolos'
+      || category === 'formacion' 
+      ) {
     newDoc ( datos, () => {
       callback();
     });
@@ -200,6 +217,7 @@ function addFile( oParam, callback ) {
 }
 
 function newDoc( param, callback) {
+  console.log( "newDoc ");
   const Doc = process.getModel('documents');
   const newDoc = new Doc({
     cliente: param.client,
@@ -212,10 +230,12 @@ function newDoc( param, callback) {
     responsable: param.fields.resp,
     version: param.fields.ver,
   });
+  console.log( newDoc );
   newDoc.save( ( err ) => {
     if ( err ) {
       console.error( `Error adding doc to DB documents ${err}`);
-    }
+    } else {
+    console.log("data saved to bd"); }
   });
   callback();
 }
@@ -266,7 +286,7 @@ function randomFileName( numChars, ext) {
 function deleteFile( oParam, callback) {
   const param = JSON.parse( oParam );
   const fichero = param.nombreFichero || '';
-  console.log( `delete: ${fichero}`);
+  console.log( `delete: ${param._id} ${fichero}`);
   console.log( param );
   fileId = param._id;
   const filter = {
@@ -274,10 +294,20 @@ function deleteFile( oParam, callback) {
   };
   
   let deleteReg = '';
-  if ( param.categoria === 'estatutos' || param.categoria === 'memoria' || param.categoria === 'actasreuniones' ) {
+  const category = param.categoria;
+  if (   category === 'estatutos'      || category === 'memoria' 
+      || category === 'actasreuniones' || category === 'economicos' 
+      || category === 'generales'      || category === 'documentos'
+      || category === 'denuncias'      || category === 'propuestas'
+      || category === 'oci'            || category === 'auditorias'
+      || category === 'controles'      || category === 'protocolos'
+      || category === 'formacion' 
+      ) {
+    console.log("deleting from documents");
     deleteReg = process.getModel('documents');
   }
-  else if( param.categoria === 'personal' ) {
+  else if( category === 'personal' ) {
+    console.log("deleting from persons");
     deleteReg = process.getModel('persons');
   }
 
