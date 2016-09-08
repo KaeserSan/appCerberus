@@ -1,0 +1,11 @@
+extends layout
+
+block mainContent
+  div.mainContent
+  h2 Atenuantes de Gestión
+  ul.tabs(data-tab, id="tabsatenuantes")
+    li.tab-title.active#atenuantes
+      a(href="#atenuantes") Atenuantes de Gestión
+  div.tabs-content
+    div.content.active(id="atenuantes")
+      //- include ./atenuantes.pug

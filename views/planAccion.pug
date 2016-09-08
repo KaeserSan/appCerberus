@@ -1,0 +1,11 @@
+extends layout
+
+block mainContent
+  div.mainContent
+  h2 Plan de Accion
+  ul.tabs(data-tab, id="tabsPlanAccion")
+    li.tab-title.active#planAccion
+      a(href="#planAccion") Plan de Accion
+  div.tabs-content
+    div.content.active(id="planAccion")
+      //- include ./planAccion.pug

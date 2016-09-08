@@ -1,0 +1,11 @@
+extends layout
+
+block mainContent
+  div.mainContent
+  h2 Agenda RPC
+  ul.tabs(data-tab, id="tabsagendaRpc")
+    li.tab-title.active#agendaRpc
+      a(href="#agendaRpc") Agenda RPC
+  div.tabs-content
+    div.content.active(id="agendaRpc")
+      //- include ./agendaRpc.pug

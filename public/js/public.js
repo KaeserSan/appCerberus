@@ -173,5 +173,22 @@ $('#lateralMenu').click(function () {
   }
 });
 
+let menuVisible = false;
+$('#userName').on('click', ( e ) => {
+  console.log('menu appears');
+  console.log( menuVisible );
+  if ( menuVisible === true ){
+      $('.userMenu').fadeOut(200);
+      menuVisible = false;
+  } else {
+    $('.userMenu').fadeIn(200);
+    menuVisible = true;
+  }
+});
+
+$('.userMenu').fadeOut(1);
+// $('.userMenu').css({opacity: 1.0, visibility: "visible"}).animate({opacity: 0}, 200);
+console.log("fading out menu");
+
 module.exports.comboClientesChanged = comboClientesChanged;
 

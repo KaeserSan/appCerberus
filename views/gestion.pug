@@ -1,0 +1,11 @@
+extends layout
+
+block mainContent
+  div.mainContent
+  h2 Gestión Expedientes
+  ul.tabs(data-tab, id="tabsgestion")
+    li.tab-title.active#gestion
+      a(href="#gestion") Gestión Expedientes
+  div.tabs-content
+    div.content.active(id="gestion")
+      include ./gestion.pug

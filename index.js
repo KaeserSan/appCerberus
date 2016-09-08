@@ -57,15 +57,9 @@ app.post( '/auth', ( req, res ) => { //  req.params.id => /auth/:id
 app.get( '/oci', ( req, res ) => {
   console.log( req.cookies );
   main.getData( req.cookies, ( oData ) => {
-    console.log( 'oData' );
     console.log( oData );
     res.render( 'oci', {
-      user: JSON.stringify( oData.user),
-      clientes: JSON.stringify( oData.clientes),
-      ejercicios: JSON.stringify( oData.ejercicios),
-      defCli: JSON.stringify( oData.defCli ),
-      defEj: JSON.stringify( oData.defEj ),
-      defTab: JSON.stringify( oData.defTab ),
+      data: oData,
     });
   });
 });
@@ -73,12 +67,7 @@ app.get( '/oci', ( req, res ) => {
 app.get( '/protocolos', ( req, res ) => {
   main.getData( req.cookies, ( oData ) => {
     res.render( 'protocolos', {
-      user: JSON.stringify( oData.user),
-      clientes: JSON.stringify( oData.clientes),
-      ejercicios: JSON.stringify( oData.ejercicios),
-      defCli: JSON.stringify( oData.defCli ),
-      defEj: JSON.stringify( oData.defEj ),
-      defTab: JSON.stringify( oData.defTab ),
+      data: oData,
     });
   });
 });
@@ -86,12 +75,7 @@ app.get( '/protocolos', ( req, res ) => {
 app.get( '/registros', ( req, res ) => {
   main.getData( req.cookies, ( oData ) => {
     res.render( 'registros', {
-      user: JSON.stringify( oData.user),
-      clientes: JSON.stringify( oData.clientes),
-      ejercicios: JSON.stringify( oData.ejercicios),
-      defCli: JSON.stringify( oData.defCli ),
-      defEj: JSON.stringify( oData.defEj ),
-      defTab: JSON.stringify( oData.defTab ),
+      data: oData,
     });
   });
 });
@@ -99,12 +83,63 @@ app.get( '/registros', ( req, res ) => {
 app.get( '/plantillas', ( req, res ) => {
   main.getData( req.cookies, ( oData ) => {
     res.render( 'plantillas', {
-      user: JSON.stringify( oData.user),
-      clientes: JSON.stringify( oData.clientes),
-      ejercicios: JSON.stringify( oData.ejercicios),
-      defCli: JSON.stringify( oData.defCli ),
-      defEj: JSON.stringify( oData.defEj ),
-      defTab: JSON.stringify( oData.defTab ),
+      data: oData,
+    });
+  });
+});
+
+app.get( '/agendaRpc', ( req, res ) => {
+  main.getData( req.cookies, ( oData ) => {
+    res.render( 'agendaRpc', {
+      data: oData,
+    });
+  });
+});
+
+app.get( '/atenuantes', ( req, res ) => {
+  main.getData( req.cookies, ( oData ) => {
+    res.render( 'atenuantes', {
+      data: oData,
+    });
+  });
+});
+
+app.get( '/canaletico', ( req, res ) => {
+  main.getData( req.cookies, ( oData ) => {
+    res.render( 'canaletico', {
+      data: oData,
+    });
+  });
+});
+
+app.get( '/formacion', ( req, res ) => {
+  main.getData( req.cookies, ( oData ) => {
+    res.render( 'formacion', {
+      data: oData,
+    });
+  });
+});
+
+app.get( '/gestion', ( req, res ) => {
+  main.getData( req.cookies, ( oData ) => {
+    res.render( 'gestion', {
+      data: oData,
+    });
+  });
+});
+
+app.get( '/mapariesgos', ( req, res ) => {
+  main.getData( req.cookies, ( oData ) => {
+    res.render( 'mapariesgos', {
+      data: oData,
+    });
+  });
+});
+
+app.get( '/planAccion', ( req, res ) => {
+  main.getData( req.cookies, ( oData ) => {
+    res.render( 'planAccion', {
+      data: oData,
     });
   });
 });
@@ -226,9 +261,9 @@ app.post('/setDefaults', ( req, res ) => {
   });
 });
 
+const PORT = process.env.PORT;
 
-
-app.listen(3000, ( req, res) => {
+app.listen(PORT || 3000, ( req, res) => {
   // console.log('Listening on port 3000');
   console.log(`Listening on port 3000`);
 } );

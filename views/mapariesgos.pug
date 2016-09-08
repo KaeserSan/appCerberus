@@ -1,0 +1,11 @@
+extends layout
+
+block mainContent
+  div.mainContent
+  h2 Mapa de Riesgos
+  ul.tabs(data-tab, id="tabsMapaRiesgos")
+    li.tab-title.active#mapaRiesgos
+      a(href="#mapariesgos") Mapa de Riesgos
+  div.tabs-content
+    div.content.active(id="mapariesgos")
+      include ./mapariesgos-mapa.pug

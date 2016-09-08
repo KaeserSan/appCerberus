@@ -40,7 +40,7 @@ html(lang="en")
                   - var nomCliente = cliente.datos.nombre;
                   option(value=cliente.datos.codigo, data-cliid=cliente._id data-logo=cliente.datos.logo) #{nomCliente}
             - console.log( datos.clientes[0].datos.logo )
-            img#clientLogo(src="/img/" hidden=true)
+            img#clientLogo(src="" hidden=true)
           div.ejercicios
             div.ejercicioLabel
               span Ejercicio:
@@ -60,6 +60,11 @@ html(lang="en")
             - var userName = data.user;
             p Hola
               a(href="#" id="userName") #{userName}
+              div.userMenu
+                br
+                a(href='/') Settings
+                br
+                a(href='/') Logout
     div.lateralButton
       a#lateralMenu
         i.glyphicon.glyphicon-th-list

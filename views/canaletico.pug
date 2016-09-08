@@ -1,0 +1,11 @@
+extends layout
+
+block mainContent
+  div.mainContent
+  h2 Canal Ético
+  ul.tabs(data-tab, id="tabscanalEtico")
+    li.tab-title.active#canalEtico
+      a(href="#canalEtico") Canal Ético
+  div.tabs-content
+    div.content.active(id="canalEtico")
+      //- include ./canalEtico.pug

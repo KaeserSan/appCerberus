@@ -12,6 +12,7 @@ body.toDoBody {
 }
 .semaforo {
   float: right;
+  top: 50px;
 }
 .semaforo img{
   height: 450px;
@@ -121,6 +122,18 @@ body.toDoBody {
 .usuario .userLabel {
   display: flex;
   align-items: flex-end;
+}
+.userMenu {
+  position: absolute;
+  margin-top: 40px;
+  margin-left: 55px;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid cyan;
+  border-radius: 5px;
+  background-color: cyan;
+  width: 100px;
+  /*visibility: hidden;*/
 }
 .cerberusContainer {
   margin: 0 15px;

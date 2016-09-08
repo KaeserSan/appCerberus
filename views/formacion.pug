@@ -1,0 +1,11 @@
+extends layout
+
+block mainContent
+  div.mainContent
+  h2 Formación
+  ul.tabs(data-tab, id="tabsformacion")
+    li.tab-title.active#formacion
+      a(href="#formacion") Formación
+  div.tabs-content
+    div.content.active(id="formacion")
+      //- include ./formacion.pug

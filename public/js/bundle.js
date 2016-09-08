@@ -2419,6 +2419,23 @@ $('#lateralMenu').click(function () {
   }
 });
 
+var menuVisible = false;
+$('#userName').on('click', function (e) {
+  console.log('menu appears');
+  console.log(menuVisible);
+  if (menuVisible === true) {
+    $('.userMenu').fadeOut(200);
+    menuVisible = false;
+  } else {
+    $('.userMenu').fadeIn(200);
+    menuVisible = true;
+  }
+});
+
+$('.userMenu').fadeOut(1);
+// $('.userMenu').css({opacity: 1.0, visibility: "visible"}).animate({opacity: 0}, 200);
+console.log("fading out menu");
+
 module.exports.comboClientesChanged = comboClientesChanged;
 
 },{"./oci/oci_actasreuniones.js":2,"./oci/oci_estatutos.js":3,"./oci/oci_memoria.js":4,"./oci/oci_personal.js":5,"./plantillas/plantillas_auditorias.js":6,"./plantillas/plantillas_controles.js":7,"./plantillas/plantillas_formacion.js":8,"./plantillas/plantillas_oci.js":9,"./plantillas/plantillas_protocolos.js":10,"./protocolos/protocolos-economicos.js":11,"./protocolos/protocolos-generales.js":12,"./registros/registros_denuncias.js":14,"./registros/registros_documentos.js":15,"./registros/registros_propuestas.js":16,"underscore":1}],14:[function(require,module,exports){
