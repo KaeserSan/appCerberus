@@ -1,85 +1,122 @@
 doctype HTML
 html(lang="en")
-	head
-		title Cerberus RPC
-		//- link( rel="stylesheet", href="/css/bootstrap/bootstrap-3.3.6.min.css")
-		link( rel="stylesheet", href="/css/bootstrap/bootstrap-3.3.7.min.css")
-		<!--Foundation-->
-		link(rel="stylesheet" href="/css/foundation/foundation.css" type="text/css")
-		//- link(rel="stylesheet" href="/css/foundation/foundation.min.css" type="text/css")
+  head
+    title Cerberus RPC
+    //- link( rel="stylesheet", href="/css/bootstrap/bootstrap-3.3.6.min.css")
+    link( rel="stylesheet", href="/css/bootstrap/bootstrap-3.3.7.min.css")
+    <!--Foundation-->
+    link(rel="stylesheet" href="/css/foundation/foundation.css" type="text/css")
+    //- link(rel="stylesheet" href="/css/foundation/foundation.min.css" type="text/css")
 
-		<!--Bootstrap-Table-- https://github.com/wenzhixin/bootstrap-table -->
-		link(rel="stylesheet" href="/css/bootstrap-table/bootstrap-table.css" type="text/css")
+    <!--Bootstrap-Table-- https://github.com/wenzhixin/bootstrap-table -->
+    link(rel="stylesheet" href="/css/bootstrap-table/bootstrap-table.css" type="text/css")
 
-		link(rel="stylesheet", href="/css/style.css")
-
-
-	body.cerberusBody
-		header.cerberusHeader
-				div.logo
-					img(src="/img/Cerberus_Logo.png")
-				div.upperMenu
-					//- a(href="/tasks", name="menuTasks", class=activeTasks ? "selected" : "").menuButton List Tasks
-					div.clientes
-						div.clientesLabel
-							span Seleccione cliente:
-						div.selectClientes
-							select#comboClientes( data-cliid="" )
-								- var parsedClientes = JSON.parse( clientes );
-								each cliente in parsedClientes
-									- var nomCliente = cliente.datos.nombre;
-									option(value=cliente.datos.codigo, data-cliid=cliente._id) #{nomCliente}
-					div.ejercicios
-						div.ejercicioLabel
-							span Ejercicio:
-						div.ejercicio
-							select#comboEjercicios( val="" )
-								- var parsedEjercicios = JSON.parse( ejercicios );
-								each ejercicio in parsedEjercicios
-									- var ejercicioValue = ejercicio.year
-									option(value=ejercicioValue) #{ejercicioValue}
-					div.usuario.userLabel
-						//- input.userLabel(hidden=false value=userName)
-						p Hola
-							a(href="#" id="userName") userName
-		include Pop-upload
-		include Pop-personal
-		div.cerberusContainer
-			aside.asideMenu.col-md-2
-				span Menu
-				div.menuLateral
-					include menuLateral
-			div.mainContent.col-md-8
-				block mainContent
-			div.semaforo.col-md-2
-				img(src="/img/semaforo.png")
+    link(rel="stylesheet", href="/css/style.css")
 
 
-	//- script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js")
-	script(src="js/jquery-2.2.4/jquery.min.js")
+  body.cerberusBody
+    header.cerberusHeader
+        div.logo
+          img(src="/img/Cerberus_Logo.png")
+        div.upperMenu
+          //- a(href="/tasks", name="menuTasks", class=activeTasks ? "selected" : "").menuButton List Tasks
+          div.clientes
+            div.clientesLabel
+              span Seleccione cliente:
+            div.selectClientes
+              select#comboClientes( data-cliid="" value="")
+                - var parsedClientes = JSON.parse( clientes );
+                - var defCliente = defCli ;
+                - var tabDef = defTab;
+                - console.log( 'layout defTab' );
+                - console.log( defTab );
+                each cliente in parsedClientes
+                  - var nomCliente = cliente.datos.nombre;
+                  option(value=cliente.datos.codigo, data-cliid=cliente._id) #{nomCliente}
+          div.ejercicios
+            div.ejercicioLabel
+              span Ejercicio:
+            div.ejercicio
+              select#comboEjercicios( value="" )
+                - var parsedEjercicios = JSON.parse( ejercicios );
+                - var defEjercicio = defEj ;
+                each ejercicio in parsedEjercicios
+                  - var ejercicioValue = ejercicio.year
+                  option(value=ejercicioValue) #{ejercicioValue}
+          input#cliDefault(type="hidden" value=defCliente)
+          input#ejDefault(type="hidden" value=defEjercicio)
+          input#tabDefault(type="hidden" value=tabDef)
+          div.usuario.userLabel
+            //- input.userLabel(hidden=false value=userName)
+            p Hola
+              a(href="#" id="userName") userName
+    div.lateralButton
+      a#lateralMenu
+        i.glyphicon.glyphicon-th-list
+    include Pop-upload
+    include Pop-personal
+    div.cerberusContainer
+      aside.asideMenu.col-md-2#menuLateral
+        span Menu
+        div.menuLateral
+          include menuLateral
+      div.mainContent.col-md-10
+        block mainContent
+      div.semaforo.col-md-2
+        img(src="/img/semaforo.png")
 
-	<!-- Bootstrap -->
-	script(src="/js/bootstrap/bootstrap-3.3.7.min.js")
-	<!--Foundation-->
-	script(src="/js/foundation/foundation.min.js")
-	//- script(src="/js/foundation/foundation.js")
-	script(src="/js/foundation/foundation.topbar.js")
-	<!--Bootstrap-Table-- https://github.com/wenzhixin/bootstrap-table -->
-	script(src="js/bootstrap-table/bootstrap-table.js")
-	script(src="js/bootstrap-table/locale/bootstrap-table-es-SP.js")
-	script(src="js/bootstrap-table/extensions/toolbar/bootstrap-table-toolbar.js")
-	script(src="js/bootstrap-table/extensions/export/bootstrap-table-export.js")
-	script(src="js/bootstrap-table/extensions/editable/bootstrap-table-editable.js")
-	<!-- table export -->
-	script(src="js/jquery-plugin/tableExport.js")
-	script(src="js/jquery-plugin/jquery.base64.js")
-	//- script(src="/js/public.js")
-	script(src="/js/bundle.js")
-	//- script(src="/js/oci/oci_estatutos.js")
-	//- script(src="/js/oci/oci_personal.js")
-	//- script(src="/js/oci/oci_actasReuniones.js")
-	//- script(src="/js/oci/oci_memoria.js")
-	script.
-		$(document).foundation();
+
+  //- script(src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js")
+  script(src="js/jquery-2.2.4/jquery.min.js")
+
+  <!-- Bootstrap -->
+  script(src="/js/bootstrap/bootstrap-3.3.7.min.js")
+  <!--Foundation-->
+  script(src="/js/foundation/foundation.min.js")
+  //- script(src="/js/foundation/foundation.js")
+  script(src="/js/foundation/foundation.topbar.js")
+  <!--Bootstrap-Table-- https://github.com/wenzhixin/bootstrap-table -->
+  script(src="js/bootstrap-table/bootstrap-table.js")
+  script(src="js/bootstrap-table/locale/bootstrap-table-es-SP.js")
+  script(src="js/bootstrap-table/extensions/toolbar/bootstrap-table-toolbar.js")
+  script(src="js/bootstrap-table/extensions/export/bootstrap-table-export.js")
+  script(src="js/bootstrap-table/extensions/editable/bootstrap-table-editable.js")
+  <!-- table export -->
+  script(src="js/jquery-plugin/tableExport.js")
+  script(src="js/jquery-plugin/jquery.base64.js")
+  //- script(src="/js/public.js")
+  script(src="/js/bundle.js")
+  //- script(src="/js/oci/oci_estatutos.js")
+  //- script(src="/js/oci/oci_personal.js")
+  //- script(src="/js/oci/oci_actasReuniones.js")
+  //- script(src="/js/oci/oci_memoria.js")
+  script.
+    $(document).foundation();
+  script.
+    $(document).on('ready', () => {
+      console.log($('#tabDefault').val() );
+
+      if( $('#cliDefault').val() !== undefined ) {
+        if( $('#cliDefault').val().length !== 0 && $('#cliDefault').val() !== '""'){
+          let reg = JSON.parse( $('#cliDefault').val() );
+          document.getElementById("comboClientes").value = reg;
+        }
+      }
+      if ( $('#ejDefault').val() !== undefined ) {
+        if( $('#ejDefault').val().length !== 0 && $('#ejDefault').val() !== '""'){
+          let reg = JSON.parse( $('#ejDefault').val() );
+          document.getElementById("comboEjercicios").value = reg;
+        }
+      }
+      //- if ( $('#tabDefault').val() !== undefined ) {
+      //-   if( $('#tabDefault').val().length !== 0 && $('#tabDefault').val() !== '""'){
+      //-     let tab = JSON.parse( $('#tabDefault').val() );
+      //-     console.log(`setting tabs to ${tab}`);
+      //-     // Click event: tab title
+      //-     var obj = document.getElementById(tab);
+      //-     usual_tab_behavior(obj, this);
+      //-     }
+      //-   }
+      })
 
 

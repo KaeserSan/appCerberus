@@ -38,6 +38,7 @@ function checkUserTest( param1 ) {
 }
 
 function getExercices() {
+  console.log('---getExercices');
   const filter = {};
   const project = { ejercicio: { id: 1 } };
   // return a Promise
@@ -47,6 +48,7 @@ function getExercices() {
 }
 
 function getClients(aClients, callback) {
+  console.log('---getClients');
   const result = {};
   const groupPromisesGetClients = [];
 
@@ -71,17 +73,41 @@ function getClients(aClients, callback) {
 }
 
 function getData(cookies, callback) {
+  console.log('--- getData');
+  console.log( cookies );
   if (_.isEmpty(cookies)) {
     console.log('Empty cookies, exiting...');
     callback(false);
   }
-  const cookie = cookies.user.user;
+  const cookie   = cookies.user.user;
   const clientes = cookies.user.clients;
-  const data = {};
-  const dataEx = [];
+  const data     = {};
+  const dataEx   = [];
   const aEjercicios = [];
-  const aClientes = [];
-  const oTemp = {};
+  const aClientes   = [];
+  const oTemp    = {};
+  let defCli = '';
+  let defEj = '';
+  let defTab = '';
+  if (_.isEmpty(cookies.path)) {
+    console.log('path cookie empty');
+    defCli   = '';
+    defEj    = '';
+  } else {
+    console.log('path cookie filled');
+    defCli   = cookies.path.defCli;
+    defEj    = cookies.path.defEj;
+    console.log( cookies.path.defTab );
+    if ( _.isEmpty( cookies.path.tabSelected ) ) {
+      console.log('cookie defTab empty');
+      defTab = '';
+    } else {
+      console.log('cookie defTab NOT empty');
+      defTab = cookies.path.tabSelected;
+    }
+  }
+
+
 
   const aPromises = [getExercices(), getClients(clientes)];
 
@@ -98,8 +124,11 @@ function getData(cookies, callback) {
       }
 
       data.ejercicios = aEjercicios;
+      data.defCli = defCli;
+      data.defEj = defEj;
+      data.defTab = defTab;
 
-      aResults[1].forEach(function(data) {
+      aResults[1].forEach( ( data ) => {
         aClientes.push(data[0]);
       });
       data.clientes = aClientes;
@@ -118,9 +147,27 @@ function setCookies( oUserData, res ) {
     user: oUserData[0].user,
     clients: clients,
   };
-
+  res.clearCookie('user');
+  res.clearCookie('path');
   res.cookie( 'user', cookies );
   return cookies;
+}
+
+function setCookieDefaults( oData, res, callback ) {
+  console.log('setCookiedefaults');
+  console.log( oData );
+
+  const cookies = {
+    defCli: oData.defCli,
+    defEj: oData.defEj,
+  };
+
+  if ( oData.defTab !== undefined ) {
+    cookies.tabSelected = oData.defTab;
+  }
+
+  res.cookie( 'path', cookies );
+  callback('OK');
 }
 
 function docs( params, proj, callback ) {
@@ -193,9 +240,8 @@ function addFile( oParam, callback ) {
     files: oParam.files,
     fields: oParam.fields,
   };
-  console.log( datos );
   const category = datos.category;
-  
+
   if (   category === 'estatutos'      || category === 'memoria' 
       || category === 'actasreuniones' || category === 'economicos' 
       || category === 'generales'      || category === 'documentos'
@@ -217,7 +263,6 @@ function addFile( oParam, callback ) {
 }
 
 function newDoc( param, callback) {
-  console.log( "newDoc ");
   const Doc = process.getModel('documents');
   const newDoc = new Doc({
     cliente: param.client,
@@ -230,7 +275,6 @@ function newDoc( param, callback) {
     responsable: param.fields.resp,
     version: param.fields.ver,
   });
-  console.log( newDoc );
   newDoc.save( ( err ) => {
     if ( err ) {
       console.error( `Error adding doc to DB documents ${err}`);
@@ -292,7 +336,7 @@ function deleteFile( oParam, callback) {
   const filter = {
     _id: ObjectId(fileId),
   };
-  
+
   let deleteReg = '';
   const category = param.categoria;
   if (   category === 'estatutos'      || category === 'memoria' 
@@ -301,7 +345,7 @@ function deleteFile( oParam, callback) {
       || category === 'denuncias'      || category === 'propuestas'
       || category === 'oci'            || category === 'auditorias'
       || category === 'controles'      || category === 'protocolos'
-      || category === 'formacion' 
+      || category === 'formacion'
       ) {
     console.log("deleting from documents");
     deleteReg = process.getModel('documents');
@@ -337,41 +381,34 @@ function getTiposPersonal() {
 }
 
 
+exports.checkUser = checkUser;
+exports.checkUserTest = checkUserTest;
+exports.getExercices = getExercices;
+exports.getClients = getClients;
+exports.getData = getData;
+exports.docs = docs;
+exports.getDocsTest = getDocsTest;
+exports.setCookies = setCookies;
+exports.addFile = addFile;
+exports.deleteFile = deleteFile;
+exports.getTiposPersonal = getTiposPersonal;
+exports.randomFileName = randomFileName;
+exports.setCookieDefaults = setCookieDefaults;
 
 
 
 
-
-
-
-
-
-
-
-
-
-/* ejercicio:id ->
-  ejercicio:documentos:oci:estatutos: ->
-            nombreDocumento: String,
-            nombreFichero: String,
-            version: String,
-            fechaUpload: Date,
-            responsable: String,
-
-
-
-*/
 // SAVE DATA MONGOOSE WITH RELATIONED SAVED DATA
 // var aaron = new Person({ _id: 0, name: 'Aaron', age: 100 });
 
 // aaron.save(function(err) {
 //   if (err) return handleError(err);
-  
+//
 //   var story1 = new Story({
 //     title: 'Once upon a timex.',
 //     _creator: aaron._id    // assign the _id from the person
 //   });
-  
+//
 //   story1.save(function(err) {
 //     if (err) return handleError(err);
 //     // thats it!
@@ -380,28 +417,7 @@ function getTiposPersonal() {
 // SAVE DATA MONGOOSE WITH RELATIONED SAVED DATA
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//Use Mongo without mongoose
+// Use Mongo without mongoose
 // function getMongoData(filter, project, collection, callback) {
 //   filter = filter || {};
 //   project = project || {};
@@ -420,24 +436,5 @@ function getTiposPersonal() {
 //       });
 //     });
 // }
-
-
-
-
-
-
-exports.checkUser = checkUser;
-exports.checkUserTest = checkUserTest;
-exports.getExercices = getExercices;
-exports.getClients = getClients;
-exports.getData = getData;
-exports.docs = docs;
-exports.getDocsTest = getDocsTest;
-exports.setCookies = setCookies;
-exports.addFile = addFile;
-exports.deleteFile = deleteFile;
-exports.getTiposPersonal = getTiposPersonal;
-exports.randomFileName = randomFileName;
-
 
 

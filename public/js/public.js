@@ -15,7 +15,7 @@ require('./plantillas/plantillas_controles.js');
 require('./plantillas/plantillas_formacion.js');
 require('./plantillas/plantillas_protocolos.js');
 
-console.log('...public.js');
+console.log( '...public.js' );
 
 $('.btnAdd').on('click', ( e ) => {
   const collection = (e.currentTarget.parentElement.parentElement.id).replace('_', '/').split('/')[0];
@@ -90,12 +90,35 @@ function comboEjerciciosChanged(param) {
 }
 
 $('#comboClientes').on('change', ( e ) => {
-  comboClientesChanged( e );
+  const defaults = {
+    defCli: e.currentTarget.value,
+    defEj: $('#comboEjercicios').val(),
+  };
+  $.ajax({
+    url: '/setDefaults',
+    type: 'POST',
+    data: defaults,
+    success: function (data) {
+      comboClientesChanged( e );
+    },
+  });
 });
 
 $('#comboEjercicios').on('change', ( e ) => {
-  comboEjerciciosChanged( e );
+  const defaults = {
+    defCli: $('#comboClientes').val(),
+    defEj: e.currentTarget.value,
+  };
+  $.ajax({
+    url: '/setDefaults',
+    type: 'POST',
+    data: defaults,
+    success: function (data) {
+      comboEjerciciosChanged( e );
+    },
+  });
 });
+
 
 $('.myTable').on('click-cell.bs.table', ( field, value, row, $element ) => {
   if ( value === 'nombreDocumento') {
@@ -109,7 +132,41 @@ $('.myTable').on('click-cell.bs.table', ( field, value, row, $element ) => {
   }
 });
 
+$('.tab-title').on('click', ( e ) => {
+  const defaults = {
+    defCli: $('#comboClientes').val(),
+    defEj: $('#comboEjercicios').val(),
+    defTab: e.currentTarget.id,
+  };
+  $.ajax({
+    url: '/setDefaults',
+    type: 'POST',
+    data: defaults,
+    success: function (data) {
+      console.log("data sent OK");
+    },
+  });
+});
+
+$('#lateralMenu').click(function () {
+  const menu = document.getElementById('menuLateral');
+  const styles = $('#menuLateral').prop('style');
+  console.log( styles );
+  console.log( typeof(styles));
+  console.log( styles.left );
+  console.log( menu );
+  if ( styles.left === '0px' ) {
+    $('.asideMenu').animate({
+        left: '-203px',
+    }, 500);
+    $('.mainContent').removeClass('col-md-offset-2');
+  } else {
+    $('.asideMenu').animate({
+        left: '0px',
+    }, 500);
+    $('.mainContent').addClass('col-md-offset-2');
+  }
+});
 
 module.exports.comboClientesChanged = comboClientesChanged;
-
 

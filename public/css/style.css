@@ -10,6 +10,9 @@ body.toDoBody {
 .logo img{
   width: 100px;
 }
+.semaforo {
+  float: right;
+}
 .semaforo img{
   height: 450px;
   margin-top: 50px;
@@ -117,7 +120,15 @@ body.toDoBody {
   display: flex;
   flex-direction: row;
 }
-
+.lateralButton {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+}
+.lateralButton i{
+  margin: 0;
+  margin-left: 15px;
+}
 .asideMenu{
   display: flex;
   flex-direction: column;
@@ -125,6 +136,10 @@ body.toDoBody {
   background-color: cyan;
   width: 15%;
   margin-top: 25px;
+  height: 100%;
+  left: -203px;
+  position: absolute;
+  z-index: 1;
 }
 .asideMenu > span {
   text-align: center;
@@ -190,6 +205,7 @@ body.toDoBody {
 
 .mainContent p{
   color: #676360;
+  float: left;
 }
 
 .inputForm {

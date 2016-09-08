@@ -2252,6 +2252,8 @@ $('#protocolos-generales').bootstrapTable({
 },{"../utils.js":17}],13:[function(require,module,exports){
 'use strict';
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
 /* global $ */
 var _ = require('underscore');
 require('./oci/oci_estatutos.js');
@@ -2336,11 +2338,33 @@ function comboEjerciciosChanged(param) {
 }
 
 $('#comboClientes').on('change', function (e) {
-  comboClientesChanged(e);
+  var defaults = {
+    defCli: e.currentTarget.value,
+    defEj: $('#comboEjercicios').val()
+  };
+  $.ajax({
+    url: '/setDefaults',
+    type: 'POST',
+    data: defaults,
+    success: function success(data) {
+      comboClientesChanged(e);
+    }
+  });
 });
 
 $('#comboEjercicios').on('change', function (e) {
-  comboEjerciciosChanged(e);
+  var defaults = {
+    defCli: $('#comboClientes').val(),
+    defEj: e.currentTarget.value
+  };
+  $.ajax({
+    url: '/setDefaults',
+    type: 'POST',
+    data: defaults,
+    success: function success(data) {
+      comboEjerciciosChanged(e);
+    }
+  });
 });
 
 $('.myTable').on('click-cell.bs.table', function (field, value, row, $element) {
@@ -2352,6 +2376,42 @@ $('.myTable').on('click-cell.bs.table', function (field, value, row, $element) {
     } else {
       alert('Por favor, active ventanas emergentes para ver el contenido.');
     }
+  }
+});
+
+$('.tab-title').on('click', function (e) {
+  var defaults = {
+    defCli: $('#comboClientes').val(),
+    defEj: $('#comboEjercicios').val(),
+    defTab: e.currentTarget.id
+  };
+  $.ajax({
+    url: '/setDefaults',
+    type: 'POST',
+    data: defaults,
+    success: function success(data) {
+      console.log("data sent OK");
+    }
+  });
+});
+
+$('#lateralMenu').click(function () {
+  var menu = document.getElementById('menuLateral');
+  var styles = $('#menuLateral').prop('style');
+  console.log(styles);
+  console.log(typeof styles === 'undefined' ? 'undefined' : _typeof(styles));
+  console.log(styles.left);
+  console.log(menu);
+  if (styles.left === '0px') {
+    $('.asideMenu').animate({
+      left: '-203px'
+    }, 500);
+    $('.mainContent').removeClass('col-md-offset-2');
+  } else {
+    $('.asideMenu').animate({
+      left: '0px'
+    }, 500);
+    $('.mainContent').addClass('col-md-offset-2');
   }
 });
 

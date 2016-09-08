@@ -40,11 +40,15 @@ app.post( '/auth', ( req, res ) => { //  req.params.id => /auth/:id
     if ( userData.length === 0) {
       res.send( 'No tienes acceso.' );
     } else {
+      // userData.defCli = '';
+      // userData.defEj = '';
       const cookie = { user: main.setCookies( userData, res ) };
       main.getData( cookie, ( oData ) => {
         res.render( 'mainMenu', {
           clientes: JSON.stringify( oData.clientes ),
           ejercicios: JSON.stringify( oData.ejercicios ),
+          // defCli: JSON.stringify( oData.defCli ),
+          // defEj: JSON.stringify( oData.defEj ),
         });
       });
     }
@@ -52,10 +56,16 @@ app.post( '/auth', ( req, res ) => { //  req.params.id => /auth/:id
 });
 
 app.get( '/oci', ( req, res ) => {
+  console.log( req.cookies );
   main.getData( req.cookies, ( oData ) => {
+    console.log( 'oData' );
+    console.log( oData );
     res.render( 'oci', {
       clientes: JSON.stringify( oData.clientes),
       ejercicios: JSON.stringify( oData.ejercicios),
+      defCli: JSON.stringify( oData.defCli ),
+      defEj: JSON.stringify( oData.defEj ),
+      defTab: JSON.stringify( oData.defTab ),
     });
   });
 });
@@ -192,8 +202,16 @@ app.get( '/tiposPersonal', ( req, res ) => {
   });
 });
 
-app.post('/personal', ( req, res ) => {
-
+app.post('/setDefaults', ( req, res ) => {
+  console.log( req.body );
+  main.setCookieDefaults( req.body, res, ( data ) => {
+    if ( data === 'OK' ) {
+      res.status(200).send();
+    } else {
+      console.log('error setting cookie path');
+      res.status(200).send();
+    }
+  });
 });
 
 
