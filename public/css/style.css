@@ -90,9 +90,12 @@ body.toDoBody {
   margin-left: 50px;
 }
 .upperMenu .selectClientes, .upperMenu .ejercicio{
-  width:250px;
+  width:150px;
   margin-top: 22px;
   margin-left: 25px;
+}
+.upperMenu .selectClientes {
+  width:450px;
 }
 .upperMenu a{
   color: #676360;
@@ -103,6 +106,10 @@ body.toDoBody {
 }
 .upperMenu a.selected {
   color: white;
+}
+#clientLogo {
+  width: 55px;
+  border: 0;
 }
 /*.fileUploadFields{
   display: flex;

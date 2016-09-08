@@ -24,23 +24,32 @@ html(lang="en")
             div.clientesLabel
               span Seleccione cliente:
             div.selectClientes
-              select#comboClientes( data-cliid="" value="")
-                - var parsedClientes = JSON.parse( clientes );
+              select#comboClientes( data-cliid="" value="" data-logo="")
+                option
+                - console.log ( data );
+                - var datos = data;
+                - console.log(' layout datos');
+                - console.log( datos ) ;
+                // - var parsedClientes = JSON.parse( clientes );
                 - var defCliente = defCli ;
                 - var tabDef = defTab;
                 - console.log( 'layout defTab' );
                 - console.log( defTab );
-                each cliente in parsedClientes
+                //- each cliente in parsedClientes
+                each cliente in data.clientes
                   - var nomCliente = cliente.datos.nombre;
-                  option(value=cliente.datos.codigo, data-cliid=cliente._id) #{nomCliente}
+                  option(value=cliente.datos.codigo, data-cliid=cliente._id data-logo=cliente.datos.logo) #{nomCliente}
+            - console.log( datos.clientes[0].datos.logo )
+            img#clientLogo(src="/img/" hidden=true)
           div.ejercicios
             div.ejercicioLabel
               span Ejercicio:
             div.ejercicio
               select#comboEjercicios( value="" )
-                - var parsedEjercicios = JSON.parse( ejercicios );
+                // - var parsedEjercicios = JSON.parse( ejercicios );
                 - var defEjercicio = defEj ;
-                each ejercicio in parsedEjercicios
+                //- each ejercicio in parsedEjercicios
+                each ejercicio in data.ejercicios
                   - var ejercicioValue = ejercicio.year
                   option(value=ejercicioValue) #{ejercicioValue}
           input#cliDefault(type="hidden" value=defCliente)
@@ -48,8 +57,9 @@ html(lang="en")
           input#tabDefault(type="hidden" value=tabDef)
           div.usuario.userLabel
             //- input.userLabel(hidden=false value=userName)
+            - var userName = data.user;
             p Hola
-              a(href="#" id="userName") userName
+              a(href="#" id="userName") #{userName}
     div.lateralButton
       a#lateralMenu
         i.glyphicon.glyphicon-th-list

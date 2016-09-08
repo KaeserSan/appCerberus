@@ -45,10 +45,9 @@ app.post( '/auth', ( req, res ) => { //  req.params.id => /auth/:id
       const cookie = { user: main.setCookies( userData, res ) };
       main.getData( cookie, ( oData ) => {
         res.render( 'mainMenu', {
-          clientes: JSON.stringify( oData.clientes ),
-          ejercicios: JSON.stringify( oData.ejercicios ),
-          // defCli: JSON.stringify( oData.defCli ),
-          // defEj: JSON.stringify( oData.defEj ),
+          // clientes: JSON.stringify( oData.clientes ),
+          // ejercicios: JSON.stringify( oData.ejercicios ),
+          data: oData,
         });
       });
     }
@@ -61,6 +60,7 @@ app.get( '/oci', ( req, res ) => {
     console.log( 'oData' );
     console.log( oData );
     res.render( 'oci', {
+      user: JSON.stringify( oData.user),
       clientes: JSON.stringify( oData.clientes),
       ejercicios: JSON.stringify( oData.ejercicios),
       defCli: JSON.stringify( oData.defCli ),
@@ -73,8 +73,12 @@ app.get( '/oci', ( req, res ) => {
 app.get( '/protocolos', ( req, res ) => {
   main.getData( req.cookies, ( oData ) => {
     res.render( 'protocolos', {
+      user: JSON.stringify( oData.user),
       clientes: JSON.stringify( oData.clientes),
       ejercicios: JSON.stringify( oData.ejercicios),
+      defCli: JSON.stringify( oData.defCli ),
+      defEj: JSON.stringify( oData.defEj ),
+      defTab: JSON.stringify( oData.defTab ),
     });
   });
 });
@@ -82,8 +86,12 @@ app.get( '/protocolos', ( req, res ) => {
 app.get( '/registros', ( req, res ) => {
   main.getData( req.cookies, ( oData ) => {
     res.render( 'registros', {
+      user: JSON.stringify( oData.user),
       clientes: JSON.stringify( oData.clientes),
       ejercicios: JSON.stringify( oData.ejercicios),
+      defCli: JSON.stringify( oData.defCli ),
+      defEj: JSON.stringify( oData.defEj ),
+      defTab: JSON.stringify( oData.defTab ),
     });
   });
 });
@@ -91,8 +99,12 @@ app.get( '/registros', ( req, res ) => {
 app.get( '/plantillas', ( req, res ) => {
   main.getData( req.cookies, ( oData ) => {
     res.render( 'plantillas', {
+      user: JSON.stringify( oData.user),
       clientes: JSON.stringify( oData.clientes),
       ejercicios: JSON.stringify( oData.ejercicios),
+      defCli: JSON.stringify( oData.defCli ),
+      defEj: JSON.stringify( oData.defEj ),
+      defTab: JSON.stringify( oData.defTab ),
     });
   });
 });

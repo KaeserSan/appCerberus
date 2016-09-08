@@ -60,6 +60,7 @@ function getClients(aClients, callback) {
     const projection = {
       'datos.codigo': 1,
       'datos.nombre': 1,
+      'datos.logo': 1,
     };
 
     const promise = process.getModel('clients').find(query, projection)
@@ -79,7 +80,7 @@ function getData(cookies, callback) {
     console.log('Empty cookies, exiting...');
     callback(false);
   }
-  const cookie   = cookies.user.user;
+  const user   = cookies.user.user;
   const clientes = cookies.user.clients;
   const data     = {};
   const dataEx   = [];
@@ -122,7 +123,7 @@ function getData(cookies, callback) {
       if (_.findWhere(aEjercicios, { year: currentYear }) === undefined) {
         aEjercicios.push({ year: currentYear });
       }
-
+      data.user = user;
       data.ejercicios = aEjercicios;
       data.defCli = defCli;
       data.defEj = defEj;

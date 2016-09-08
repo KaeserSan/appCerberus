@@ -2338,6 +2338,10 @@ function comboEjerciciosChanged(param) {
 }
 
 $('#comboClientes').on('change', function (e) {
+  var logo = comboClientes.options[comboClientes.selectedIndex].getAttribute('data-logo');
+  console.log(logo);
+  $('#clientLogo').attr('src', '/img/' + logo).attr('hidden', false);
+
   var defaults = {
     defCli: e.currentTarget.value,
     defEj: $('#comboEjercicios').val()

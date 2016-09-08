@@ -90,6 +90,11 @@ function comboEjerciciosChanged(param) {
 }
 
 $('#comboClientes').on('change', ( e ) => {
+  const logo = comboClientes.options[comboClientes.selectedIndex].getAttribute('data-logo');
+  console.log( logo );
+  $('#clientLogo').attr('src', '/img/'+logo)
+  .attr('hidden', false);
+
   const defaults = {
     defCli: e.currentTarget.value,
     defEj: $('#comboEjercicios').val(),
