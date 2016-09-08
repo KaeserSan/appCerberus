@@ -261,7 +261,7 @@ app.post('/setDefaults', ( req, res ) => {
   });
 });
 
-const PORT = process.env.PORT;
+const PORT = process.env.ENV;
 
 app.listen(PORT || 3000, ( req, res) => {
   // console.log('Listening on port 3000');
