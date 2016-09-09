@@ -2410,12 +2410,14 @@ $('#lateralMenu').click(function () {
     $('.asideMenu').animate({
       left: '-203px'
     }, 500);
-    $('.mainContent').removeClass('col-md-offset-2');
+    $('.mainContent').css({ 'opacity': 1 });
+    $('.semaforo').css({ 'opacity': 1 });
   } else {
     $('.asideMenu').animate({
       left: '0px'
     }, 500);
-    $('.mainContent').addClass('col-md-offset-2');
+    $('.mainContent').css({ 'opacity': 0.3 });
+    $('.semaforo').css({ 'opacity': 0.3 });
   }
 });
 

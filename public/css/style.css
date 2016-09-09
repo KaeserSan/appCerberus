@@ -125,15 +125,18 @@ body.toDoBody {
 }
 .userMenu {
   position: absolute;
-  margin-top: 40px;
-  margin-left: 55px;
+  margin-top: 55px;
+  margin-left: 60px;
   display: flex;
   flex-direction: column;
   border: 1px solid cyan;
   border-radius: 5px;
-  background-color: cyan;
+  background-color: #013a4e;
   width: 100px;
   /*visibility: hidden;*/
+}
+.userMenu a{
+  color: white;
 }
 .cerberusContainer {
   margin: 0 15px;
@@ -153,7 +156,7 @@ body.toDoBody {
   display: flex;
   flex-direction: column;
   flex-wrap: auto;
-  background-color: cyan;
+  background-color: #013a4e;
   width: 15%;
   margin-top: 25px;
   height: 100%;
@@ -163,6 +166,7 @@ body.toDoBody {
 }
 .asideMenu > span {
   text-align: center;
+  color: white;
 }
 
 .menuLateral {
@@ -213,8 +217,9 @@ body.toDoBody {
 .mainTitle h1, .mainContent h1{
   margin:0;
   font-size:  2em;
-  color: white;
+  color: black;
   font-family:  arial;
+  text-align: center;
 }
 
 .mainTitle p{

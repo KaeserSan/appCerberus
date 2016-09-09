@@ -17,7 +17,7 @@ html(lang="en")
   body.cerberusBody
     header.cerberusHeader
         div.logo
-          img(src="/img/Cerberus_Logo.png")
+          img(src="/img/Cerberus-logo.jpg")
         div.upperMenu
           //- a(href="/tasks", name="menuTasks", class=activeTasks ? "selected" : "").menuButton List Tasks
           div.clientes
@@ -25,7 +25,6 @@ html(lang="en")
               span Seleccione cliente:
             div.selectClientes
               select#comboClientes( data-cliid="" value="" data-logo="")
-                option
                 - console.log ( data );
                 - var datos = data;
                 - console.log(' layout datos');
@@ -65,6 +64,7 @@ html(lang="en")
                 a(href='/') Settings
                 br
                 a(href='/') Logout
+                br
     div.lateralButton
       a#lateralMenu
         i.glyphicon.glyphicon-th-list
